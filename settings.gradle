@@ -1,6 +1,20 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+
+                username = 'mapbox'
+                password =  "sk.eyJ1IjoiYWxlc3NhbmRybzA4OSIsImEiOiJja3Z1cWtyNHU1OHlsMndxNXBlbHljYXlxIn0.7Jhb7jNppanHSVWfUxCQxQ"
+            }
+        }
+
+
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon

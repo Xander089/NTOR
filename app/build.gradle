@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -29,10 +31,53 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
 
+    //EXOPLAYER
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+
+    //CAMERAX
+    def camerax_version = "1.0.1"
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    implementation "androidx.camera:camera-view:1.0.0-alpha27"
+
+    //LIFECYCLE
+    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.0")
+    kapt("androidx.lifecycle:lifecycle-compiler:2.4.0")
+
+    //MAPBOX
+    implementation 'com.mapbox.maps:android:10.1.0'
+
+    //NAVIGATION
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    //HILT
+    implementation 'com.google.dagger:hilt-android:2.40'
+    kapt 'com.google.dagger:hilt-compiler:2.40'
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.40'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.40'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.40'
+    kaptTest 'com.google.dagger:hilt-compiler:2.40'
+
+    //ROOM
+    implementation("androidx.room:room-runtime:2.4.0")
+    annotationProcessor("androidx.room:room-compiler:2.4.0")
+    kapt("androidx.room:room-compiler:2.4.0")
+    implementation("androidx.room:room-ktx:2.4.0")
+
+    //CORE
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'

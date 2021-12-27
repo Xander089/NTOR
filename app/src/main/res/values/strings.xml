@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NTOR</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiYWxlc3NhbmRybzA4OSIsImEiOiJja3Y0N2E1Y2swYXR3Mm9sd295c2s0bTNkIn0.oph5Dj2fD_LqxSQxZ6qqjg</string>
 </resources>
