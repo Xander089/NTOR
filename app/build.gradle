@@ -40,6 +40,7 @@ dependencies {
 
     //EXOPLAYER
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //CAMERAX
     def camerax_version = "1.0.1"

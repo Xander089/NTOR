@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.ntor.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/allRunsFragment"
+        android:name="com.example.ntor.AllRunsFragment"
+        android:label="fragment_all_runs"
+        tools:layout="@layout/fragment_all_runs" >
+        <action
+            android:id="@+id/action_allRunsFragment_to_runDetailFragment"
+            app:destination="@id/runDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/runDetailFragment"
+        android:name="com.example.ntor.RunDetailFragment"
+        android:label="fragment_run_detail"
+        tools:layout="@layout/fragment_run_detail" />
+</navigation>
