@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">NTOR</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiYWxlc3NhbmRybzA4OSIsImEiOiJja3Y0N2E1Y2swYXR3Mm9sd295c2s0bTNkIn0.oph5Dj2fD_LqxSQxZ6qqjg</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location_permissions_explanation">This app needs your permission to access location to run</string>
+    <string name="share_via_sms">Share?</string>
+    <string name="reset_time">00:00:00</string>
+    <string name="done">Done!</string>
+    <string name="start">Start</string>
+    <string name="finish">Finish</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
 </resources>
