@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/run_nav_graph"
-    app:startDestination="@id/runFragment">
+    app:startDestination="@id/countDownFragment">
 
     <fragment
         android:id="@+id/runFragment"
@@ -18,5 +18,23 @@
         android:id="@+id/runCompletedFragment"
         android:name="com.example.ntor.RunCompletedFragment"
         android:label="fragment_run_completed"
-        tools:layout="@layout/fragment_run_completed" />
+        tools:layout="@layout/fragment_run_completed" >
+        <action
+            android:id="@+id/action_runCompletedFragment_to_runDetailFragment2"
+            app:destination="@id/runDetailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/runDetailFragment2"
+        android:name="com.example.ntor.RunCompletedDetailFragment"
+        android:label="fragment_run_detail"
+        tools:layout="@layout/fragment_run_detail" />
+    <fragment
+        android:id="@+id/countDownFragment"
+        android:name="com.example.ntor.CountDownFragment"
+        android:label="fragment_count_down"
+        tools:layout="@layout/fragment_count_down" >
+        <action
+            android:id="@+id/action_countDownFragment_to_runFragment"
+            app:destination="@id/runFragment" />
+    </fragment>
 </navigation>

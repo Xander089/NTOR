@@ -4,126 +4,157 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context=".HomeFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/startRunButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Start Run"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/timeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintEnd_toEndOf="@+id/timerTextView"
+                app:layout_constraintStart_toStartOf="@+id/timerTextView"
+                app:layout_constraintTop_toBottomOf="@+id/timerTextView" />
+
+            <TextView
+                android:id="@+id/distanceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintBottom_toBottomOf="@+id/caloriesLabel"
+                app:layout_constraintEnd_toEndOf="@+id/distanceTextView"
+                app:layout_constraintStart_toStartOf="@+id/distanceTextView"
+                app:layout_constraintTop_toTopOf="@+id/caloriesLabel" />
+
+            <TextView
+                android:id="@+id/caloriesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="Calories"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/rithmLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rythm"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintBottom_toBottomOf="@+id/distanceLabel"
+                app:layout_constraintEnd_toEndOf="@+id/rythmTextView"
+                app:layout_constraintStart_toStartOf="@+id/rythmTextView"
+                app:layout_constraintTop_toTopOf="@+id/distanceLabel" />
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0,0"
+                android:textColor="@color/text_timer"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toBottomOf="@+id/caloriesTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/caloriesTextView" />
+
+            <TextView
+                android:id="@+id/caloriesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="0"
+                android:textColor="@color/text_timer"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toTopOf="@+id/caloriesLabel"
+                app:layout_constraintEnd_toEndOf="@+id/caloriesLabel"
+                app:layout_constraintStart_toStartOf="@+id/caloriesLabel" />
+
+            <TextView
+                android:id="@+id/timerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:text="00:00"
+                android:textColor="@color/text_timer"
+                android:textSize="72sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rythmTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="00:00"
+                android:textColor="@color/text_timer"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toBottomOf="@+id/distanceTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/distanceTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
 
     <com.mapbox.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/timerText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
-
-    <Button
-        android:id="@+id/StartButton"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:text="@string/start"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/StopButton"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:text="stop"
-        android:textColor="@color/black"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineVertical" />
-
-    <Button
-        android:id="@+id/pauseButton"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:text="pause"
-        android:textColor="@color/black"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical" />
-
-    <Button
-        android:id="@+id/resumeButton"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/white"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:text="resume"
-        android:textColor="@color/black"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineVertical" />
-
-    <TextView
-        android:id="@+id/timerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/reset_time"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/StartButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineVertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/backgroundView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/mapView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.45" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
