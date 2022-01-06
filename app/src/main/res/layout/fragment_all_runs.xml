@@ -22,14 +22,30 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/recentActivitiesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Activities"
+                android:textAllCaps="true"
+                android:textColor="@color/text_timer"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/runList"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/recentActivitiesLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -52,6 +68,103 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.33" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.66" />
+
+            <TextView
+                android:id="@+id/activitiesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="0"
+                android:textColor="@color/text_timer"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toTopOf="@+id/activitiesLabel"
+                app:layout_constraintEnd_toEndOf="@+id/activitiesLabel"
+                app:layout_constraintStart_toStartOf="@+id/activitiesLabel" />
+
+            <TextView
+                android:id="@+id/statisticsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Statistics"
+                android:textAllCaps="true"
+                android:textColor="@color/text_timer"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textColor="@color/text_timer"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toBottomOf="@+id/activitiesTextView"
+                app:layout_constraintEnd_toEndOf="@+id/totalTimeLabel"
+                app:layout_constraintStart_toStartOf="@+id/totalTimeLabel" />
+
+            <TextView
+                android:id="@+id/distanceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintBottom_toBottomOf="@+id/totalTimeLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toTopOf="@+id/totalTimeLabel" />
+
+            <TextView
+                android:id="@+id/activitiesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activities"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/distanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0,0"
+                android:textColor="@color/text_timer"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toBottomOf="@+id/activitiesTextView"
+                app:layout_constraintEnd_toEndOf="@+id/distanceLabel"
+                app:layout_constraintStart_toStartOf="@+id/distanceLabel" />
+
+            <TextView
+                android:id="@+id/totalTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                app:layout_constraintBottom_toBottomOf="@+id/activitiesLabel"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/activitiesLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -63,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

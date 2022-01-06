@@ -18,14 +18,14 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfig = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment,
-                R.id.allRunsFragment,
-
-                )
-        )
-        setupActionBarWithNavController(navController, appBarConfig)
+//        val appBarConfig = AppBarConfiguration(
+//            setOf(
+//                R.id.homeFragment,
+//                R.id.allRunsFragment,
+//
+//                )
+//        )
+//        setupActionBarWithNavController(navController, appBarConfig)
         bottomNav.setupWithNavController(navController)
     }
 }

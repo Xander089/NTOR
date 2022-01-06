@@ -73,6 +73,161 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.16" />
+
+            <ImageView
+                android:id="@+id/iconPacing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_pacing"
+                app:layout_constraintBottom_toTopOf="@+id/iconAvgSpeed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iconAvgSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_speed"
+                app:layout_constraintBottom_toTopOf="@+id/iconMaxSpeed"
+                app:layout_constraintEnd_toEndOf="@+id/iconPacing"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/iconPacing"
+                app:layout_constraintTop_toBottomOf="@+id/iconPacing" />
+
+            <ImageView
+                android:id="@+id/iconMaxSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_speed"
+                app:layout_constraintBottom_toTopOf="@+id/iconTIme"
+                app:layout_constraintEnd_toEndOf="@+id/iconPacing"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/iconPacing"
+                app:layout_constraintTop_toBottomOf="@+id/iconAvgSpeed" />
+
+            <ImageView
+                android:id="@+id/iconTIme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_watch"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iconPacing"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/iconPacing"
+                app:layout_constraintTop_toBottomOf="@+id/iconMaxSpeed" />
+
+            <TextView
+                android:id="@+id/avgPacingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="00:00 min/km"
+                android:textAllCaps="false"
+                android:textColor="@color/text_timer"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/pacingLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/pacingLabel" />
+
+            <TextView
+                android:id="@+id/avgSpeedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0 km/h"
+                android:textAllCaps="false"
+                android:textColor="@color/text_timer"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/avgSpeedLabel"
+                app:layout_constraintEnd_toEndOf="@+id/avgPacingText"
+                app:layout_constraintTop_toTopOf="@+id/avgSpeedLabel" />
+
+            <TextView
+                android:id="@+id/maxSpeedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0 km/h"
+                android:textAllCaps="false"
+                android:textColor="@color/text_timer"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/maxSpeedLabel"
+                app:layout_constraintEnd_toEndOf="@+id/avgPacingText"
+                app:layout_constraintTop_toTopOf="@+id/maxSpeedLabel" />
+
+            <TextView
+                android:id="@+id/startTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11:00"
+                android:textAllCaps="false"
+                android:textColor="@color/text_timer"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/timeInitLabel"
+                app:layout_constraintEnd_toEndOf="@+id/avgPacingText"
+                app:layout_constraintTop_toTopOf="@+id/timeInitLabel" />
+
+            <TextView
+                android:id="@+id/pacingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Average pacing"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconPacing"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/iconPacing" />
+
+            <TextView
+                android:id="@+id/avgSpeedLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Average speed"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconAvgSpeed"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/iconAvgSpeed" />
+
+            <TextView
+                android:id="@+id/maxSpeedLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Max speed"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconMaxSpeed"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/iconMaxSpeed" />
+
+            <TextView
+                android:id="@+id/timeInitLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Start time"
+                android:textAllCaps="false"
+                android:textColor="@color/list_secondary_text"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iconTIme"
+                app:layout_constraintStart_toStartOf="@+id/guideline5"
+                app:layout_constraintTop_toTopOf="@+id/iconTIme" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.constraintlayout.widget.Guideline
