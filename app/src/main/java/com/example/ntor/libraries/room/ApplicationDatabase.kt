@@ -6,6 +6,7 @@ import androidx.room.*
     entities = [
         RunRoomEntity::class,
         PointRoomEntity::class,
+        CurrentRunPointsRoomEntity::class
     ], version = 1
 )
 abstract class ApplicationDatabase : RoomDatabase() {
@@ -15,7 +16,7 @@ abstract class ApplicationDatabase : RoomDatabase() {
 
 @Entity
 data class RunRoomEntity(
-    @ColumnInfo(name = "distance") val distance: Float = 0.0f,
+    @ColumnInfo(name = "distance") val distance: Double = 0.0,
     @ColumnInfo(name = "time") val time: Int = 0,
     @ColumnInfo(name = "date") val date: Long = 0,
 ) {
@@ -26,8 +27,19 @@ data class RunRoomEntity(
 @Entity
 data class PointRoomEntity(
     @ColumnInfo(name = "runId") val runId: Int = 0,
-    @ColumnInfo(name = "latitude") val latitude: Float = 0.0f,
-    @ColumnInfo(name = "longitude") val longitude: Float = 0.0f,
+    @ColumnInfo(name = "latitude") val latitude: Double = 0.0,
+    @ColumnInfo(name = "longitude") val longitude: Double = 0.0,
+    @ColumnInfo(name = "time") val time: Long = 0L
+
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+
+}
+@Entity
+data class CurrentRunPointsRoomEntity(
+    @ColumnInfo(name = "latitude") val latitude: Double = 0.0,
+    @ColumnInfo(name = "longitude") val longitude: Double = 0.0,
     @ColumnInfo(name = "time") val time: Long = 0L
 
 ) {

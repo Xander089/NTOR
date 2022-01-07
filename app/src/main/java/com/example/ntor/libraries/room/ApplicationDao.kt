@@ -10,16 +10,47 @@ import kotlinx.coroutines.flow.Flow
 interface ApplicationDao {
 
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPoint(point: PointRoomEntity)
-
+    //RUN
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRun(run: RunRoomEntity)
 
+    @Query("SELECT * FROM RunRoomEntity")
+    fun getRunsAsFlow(): Flow<List<RunRoomEntity>>
+
+    @Query("SELECT * FROM RunRoomEntity WHERE time = :time")
+    fun getRunByTime(time: Long): Flow<RunRoomEntity>
+
     @Query("SELECT * FROM RunRoomEntity ORDER BY id LIMIT 1")
-    fun getLatestRun() : Flow<RunRoomEntity>
+    fun getLatestRun(): Flow<RunRoomEntity>
+
+    @Query("DELETE FROM RunRoomEntity WHERE id = :runId")
+    suspend fun deleteRunById(runId: Int)
+
+    //POINTS
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPoint(point: PointRoomEntity)
 
     @Query("SELECT * FROM PointRoomEntity WHERE time = :time")
-    suspend fun getPointByTime(time: Long) : PointRoomEntity
+    suspend fun getPointByTime(time: Long): PointRoomEntity
+
+    @Query("SELECT * FROM PointRoomEntity WHERE runId = :runId")
+    suspend fun getPointsById(runId: Int): List<PointRoomEntity>
+
+    @Query("SELECT * FROM PointRoomEntity WHERE runId = :runId")
+    fun getPointsByIdAsFlow(runId: Int): Flow<List<PointRoomEntity>>
+
+    @Query("DELETE FROM PointRoomEntity WHERE runId = :runId")
+    suspend fun deletePointsById(runId: Int)
+
+
+    //TEMP POINTS
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTempPoint(point: CurrentRunPointsRoomEntity)
+
+    @Query("DELETE FROM CurrentRunPointsRoomEntity")
+    suspend fun deleteTempPoints()
+
+    @Query("SELECT * FROM CurrentRunPointsRoomEntity")
+    suspend fun getTempPoints(): List<CurrentRunPointsRoomEntity>
 
 }

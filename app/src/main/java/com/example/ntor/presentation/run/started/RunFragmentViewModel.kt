@@ -1,13 +1,12 @@
 package com.example.ntor.presentation.run.started
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.example.ntor.core.usecases.currentRun.CurrentRunBoundaryService
 import com.example.ntor.core.usecases.currentRun.CurrentRunInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -15,7 +14,7 @@ import javax.inject.Inject
 class RunFragmentViewModel @Inject constructor(private val boundary: CurrentRunInteractor) :
     ViewModel() {
 
-    val lastInsertion : Long = Date().time
+    val lastInsertion: Long = Date().time
     val latestRun = boundary.getLatestRun().asLiveData()
 
     private var userMotionState = UserMotion.STILL
@@ -25,15 +24,19 @@ class RunFragmentViewModel @Inject constructor(private val boundary: CurrentRunI
 
     private fun isUserMoving() = userMotionState == UserMotion.MOVING
 
-    fun createNewRun(){}
+    fun createNewRun() {
+        viewModelScope.launch(Dispatchers.IO) {
+
+        }
+    }
 
     fun insertNewPosition(latitude: Double, longitude: Double) {
-
-        if (isUserMoving()) {
-            Log.v("punto", latitude.toString() + " " + longitude.toString())
-            setUserMotionState(UserMotion.STILL)
+        viewModelScope.launch(Dispatchers.IO) {
+            if (isUserMoving()) {
+                boundary.insertCurrentPoint(latitude, longitude)
+            }
         }
-
+        setUserMotionState(UserMotion.STILL)
     }
 
 }

@@ -47,7 +47,7 @@ class RunFragment : Fragment() {
             viewModel.insertNewPosition(latitude, longitude)
 
             val time = Date().time
-            if(time  - viewModel.lastInsertion > 2000){
+            if (time - viewModel.lastInsertion > 2000) {
                 binding.caloriesTextView.text = latitude.toString()
             }
 
@@ -59,9 +59,7 @@ class RunFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        sensorManager =
-            requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        significantMotionSensor = sensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION)
+        initMotionSensor()
 
         binding = FragmentRunBinding.inflate(inflater, container, false)
         mapboxManager.setMapView(binding.mapView)
@@ -72,6 +70,12 @@ class RunFragment : Fragment() {
         initObservers()
 
         return binding.root
+    }
+
+    private fun initMotionSensor() {
+        sensorManager =
+            requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        significantMotionSensor = sensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION)
     }
 
     private fun initLayout() {
