@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/runFragment"
-        android:name="com.example.ntor.RunFragment"
+        android:name="com.example.ntor.presentation.run.started.RunFragment"
         android:label="fragment_run"
         tools:layout="@layout/fragment_run" >
         <action
@@ -16,21 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/runCompletedFragment"
-        android:name="com.example.ntor.RunCompletedFragment"
+        android:name="com.example.ntor.presentation.run.preview.RunCompletedFragment"
         android:label="fragment_run_completed"
-        tools:layout="@layout/fragment_run_completed" >
-        <action
-            android:id="@+id/action_runCompletedFragment_to_runDetailFragment2"
-            app:destination="@id/runDetailFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/runDetailFragment2"
-        android:name="com.example.ntor.RunCompletedDetailFragment"
-        android:label="fragment_run_detail"
-        tools:layout="@layout/fragment_run_detail" />
+        tools:layout="@layout/fragment_run_completed" />
     <fragment
         android:id="@+id/countDownFragment"
-        android:name="com.example.ntor.CountDownFragment"
+        android:name="com.example.ntor.presentation.run.countdown.CountDownFragment"
         android:label="fragment_count_down"
         tools:layout="@layout/fragment_count_down" >
         <action

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".presentation.main.home.HomeFragment">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pauseRunButton"
@@ -14,6 +14,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:text="PAUSE"
+        android:visibility="invisible"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/stopRunButton"
         app:layout_constraintEnd_toStartOf="@+id/stopRunButton"
@@ -31,6 +32,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:text="Stop"
+        android:visibility="invisible"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +55,6 @@
         android:id="@+id/materialCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,6 +65,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.33" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.66" />
 
             <TextView
                 android:id="@+id/timeLabel"
@@ -81,37 +95,37 @@
                 android:id="@+id/distanceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Distance"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
-                app:layout_constraintBottom_toBottomOf="@+id/caloriesLabel"
-                app:layout_constraintEnd_toEndOf="@+id/distanceTextView"
-                app:layout_constraintStart_toStartOf="@+id/distanceTextView"
-                app:layout_constraintTop_toTopOf="@+id/caloriesLabel" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintStart_toStartOf="@+id/guideline6" />
 
             <TextView
                 android:id="@+id/caloriesLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="Calories"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline7" />
 
             <TextView
                 android:id="@+id/rithmLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="Rythm"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
-                app:layout_constraintBottom_toBottomOf="@+id/distanceLabel"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/rythmTextView"
-                app:layout_constraintStart_toStartOf="@+id/rythmTextView"
-                app:layout_constraintTop_toTopOf="@+id/distanceLabel" />
+                app:layout_constraintStart_toStartOf="@+id/rythmTextView" />
 
             <TextView
                 android:id="@+id/distanceTextView"
@@ -120,16 +134,14 @@
                 android:text="0,0"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="@+id/caloriesTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/caloriesTextView" />
+                app:layout_constraintBottom_toTopOf="@+id/distanceLabel"
+                app:layout_constraintEnd_toEndOf="@+id/distanceLabel"
+                app:layout_constraintStart_toStartOf="@+id/distanceLabel" />
 
             <TextView
                 android:id="@+id/caloriesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="0"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
@@ -154,13 +166,12 @@
                 android:id="@+id/rythmTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="00:00"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="@+id/distanceTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/distanceTextView" />
+                app:layout_constraintBottom_toTopOf="@+id/rithmLabel"
+                app:layout_constraintEnd_toStartOf="@+id/guideline6"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -175,11 +186,12 @@
         app:layout_constraintGuide_percent="0.45" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/lockButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:src="@drawable/ic_lock_open"
+        android:translationZ="1dp"
         app:backgroundTint="@color/white"
         app:fabCustomSize="64dp"
         app:layout_constraintBottom_toBottomOf="@+id/stopRunButton"

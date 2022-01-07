@@ -5,8 +5,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
-        android:name=".dependencies.MainApplication"
+        android:name="com.example.ntor.libraries.hilt.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,13 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NTOR">
         <activity
-            android:name=".CameraActivity"
+            android:name=".presentation.camera.CameraActivity"
             android:exported="false" />
         <activity
-            android:name=".RunActivity"
+            android:name=".presentation.run.RunActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
