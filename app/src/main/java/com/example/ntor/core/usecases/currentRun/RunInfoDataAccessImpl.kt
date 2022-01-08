@@ -17,8 +17,14 @@ class RunInfoDataAccessImpl(private val dao: ApplicationDao) : RunInfoDataAccess
 
 
     //RUN
-    override suspend fun insertRun(distance: Double, time: Int, date: Long) =
-        dao.insertRun(RunRoomEntity(distance, time, date))
+    override suspend fun insertRun(
+        distance: Double,
+        time: Int,
+        date: Long,
+        pacing: Double,
+        calories: Double
+    ) =
+        dao.insertRun(RunRoomEntity(distance, time, date,pacing,calories))
 
     override fun getLatestRun(): Flow<Run> = dao.getLatestRun().map { it.toRun() }
     override fun getRunsAsFlow(): Flow<List<Run>> = dao.getRunsAsFlow().map { list ->
@@ -50,7 +56,9 @@ class RunInfoDataAccessImpl(private val dao: ApplicationDao) : RunInfoDataAccess
         )
 
     //TEMP POINT
-    override  fun getTempPoints(): Flow<List<Point>> = dao.getTempPoints().map { list -> list.map { it.toPoint() } }
+    override fun getTempPoints(): Flow<List<Point>> =
+        dao.getTempPoints().map { list -> list.map { it.toPoint() } }
+
     override suspend fun deleteTempPoints() = dao.deleteTempPoints()
     override suspend fun insertTempPoint(latitude: Double, longitude: Double) =
         dao.insertTempPoint(

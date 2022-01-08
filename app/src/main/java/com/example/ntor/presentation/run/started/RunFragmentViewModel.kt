@@ -38,7 +38,6 @@ class RunFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBo
 
     val points = boundary.getTempPoints().asLiveData()
 
-
     private val _timerText = MutableLiveData<String>()
     val timerText: LiveData<String> = _timerText
 
@@ -115,12 +114,6 @@ class RunFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBo
         timerJob.cancel()
     }
 
-
-    fun createNewRun() {
-        viewModelScope.launch(Dispatchers.IO) {
-
-        }
-    }
 
     fun insertNewPosition(latitude: Double, longitude: Double) {
 

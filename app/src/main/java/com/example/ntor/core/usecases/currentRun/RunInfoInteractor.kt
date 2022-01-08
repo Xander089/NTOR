@@ -9,8 +9,14 @@ class RunInfoInteractor(
 ) : RunInfoIOBoundary {
 
     override fun getLatestRun(): Flow<Run> = dataAccess.getLatestRun()
-    override suspend fun insertRun(distance: Double, time: Int, date: Long) =
-        dataAccess.insertRun(distance, time, date)
+    override suspend fun insertRun(
+        distance: Double,
+        time: Int,
+        date: Long,
+        pacing: Double,
+        calories: Double
+    ) =
+        dataAccess.insertRun(distance, time, date, pacing, calories)
 
 
     override fun getRunsAsFlow(): Flow<List<Run>> =

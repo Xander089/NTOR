@@ -1,6 +1,8 @@
 package com.example.ntor.presentation.run.started
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.TriggerEvent
@@ -12,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ntor.R
@@ -23,7 +26,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 
-class RunFragment : Fragment() {
+class RunFragment : Fragment(), StopRunDialog.DialogListener {
 
     companion object {
         private const val ACTION = R.id.action_runFragment_to_runCompletedFragment
@@ -82,7 +85,15 @@ class RunFragment : Fragment() {
             stopRunButton.setOnClickListener {
                 viewModel.stopTimer()
                 viewModel.setTimerState(TimerState.OFF)
-                NavigationManager.navigateTo(findNavController(), ACTION)
+                //showStopRunDialog()
+                val bundle = bundleOf(
+                    "time" to binding.timerTextView.text.toString(),
+                    "calories" to binding.caloriesTextView.text.toString(),
+                    "pacing" to binding.rythmTextView.text.toString(),
+                    "distance" to binding.distanceTextView.text.toString(),
+                )
+                NavigationManager.navigateTo(findNavController(), ACTION, bundle)
+
             }
 
             pauseRunButton.setOnClickListener {
@@ -90,6 +101,17 @@ class RunFragment : Fragment() {
             }
         }
     }
+
+    private fun showStopRunDialog() {
+        StopRunDialog(
+            getResourceString(R.string.stop_run_dialog_message),
+            getResourceString(R.string.ok),
+            getResourceString(R.string.cancel)
+        )
+            .show(parentFragmentManager, "TAG")
+    }
+
+    private fun getResourceString(id: Int) = requireActivity().resources.getString(id)
 
     private fun initObservers() {
         viewModel.timerText.observe(this, { time ->
@@ -177,5 +199,14 @@ class RunFragment : Fragment() {
             sensorManager.cancelTriggerSensor(triggerEventListener, sensor)
         }
     }
+
+
+    override fun onDialogPositiveClick() {
+
+    }
+
+    override fun onDialogNegativeClick() {
+    }
+
 
 }

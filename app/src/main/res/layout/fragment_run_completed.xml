@@ -21,15 +21,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/cameraButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
-                android:src="@drawable/ic_camera"
+            <com.mapbox.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/cameraButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/ic_camera"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
@@ -44,18 +54,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/runInfoText"
+                android:id="@+id/runDurationText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="00:00:00, RUN"
+                android:text="00:00:00"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/closeButton"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/closeButton"
                 app:layout_constraintTop_toTopOf="@+id/closeButton" />
 
@@ -128,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/iconMaxSpeed" />
 
             <TextView
-                android:id="@+id/avgPacingText"
+                android:id="@+id/pacingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -141,28 +149,28 @@
                 app:layout_constraintTop_toTopOf="@+id/pacingLabel" />
 
             <TextView
-                android:id="@+id/avgSpeedText"
+                android:id="@+id/caloriesText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.0 km/h"
+                android:text="0.0 Cal"
                 android:textAllCaps="false"
                 android:textColor="@color/text_timer"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/avgSpeedLabel"
-                app:layout_constraintEnd_toEndOf="@+id/avgPacingText"
-                app:layout_constraintTop_toTopOf="@+id/avgSpeedLabel" />
+                app:layout_constraintBottom_toBottomOf="@+id/caloriesLabel"
+                app:layout_constraintEnd_toEndOf="@+id/pacingText"
+                app:layout_constraintTop_toTopOf="@+id/caloriesLabel" />
 
             <TextView
-                android:id="@+id/maxSpeedText"
+                android:id="@+id/distanceText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0.0 km/h"
+                android:text="0.0 km"
                 android:textAllCaps="false"
                 android:textColor="@color/text_timer"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/maxSpeedLabel"
-                app:layout_constraintEnd_toEndOf="@+id/avgPacingText"
-                app:layout_constraintTop_toTopOf="@+id/maxSpeedLabel" />
+                app:layout_constraintBottom_toBottomOf="@+id/distanceLabel"
+                app:layout_constraintEnd_toEndOf="@+id/pacingText"
+                app:layout_constraintTop_toTopOf="@+id/distanceLabel" />
 
             <TextView
                 android:id="@+id/startTimeText"
@@ -173,7 +181,7 @@
                 android:textColor="@color/text_timer"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/timeInitLabel"
-                app:layout_constraintEnd_toEndOf="@+id/avgPacingText"
+                app:layout_constraintEnd_toEndOf="@+id/pacingText"
                 app:layout_constraintTop_toTopOf="@+id/timeInitLabel" />
 
             <TextView
@@ -181,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Average pacing"
+                android:text="Pacing"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 android:textSize="16sp"
@@ -190,11 +198,11 @@
                 app:layout_constraintTop_toTopOf="@+id/iconPacing" />
 
             <TextView
-                android:id="@+id/avgSpeedLabel"
+                android:id="@+id/caloriesLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Average speed"
+                android:text="Calories"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 android:textSize="16sp"
@@ -203,11 +211,11 @@
                 app:layout_constraintTop_toTopOf="@+id/iconAvgSpeed" />
 
             <TextView
-                android:id="@+id/maxSpeedLabel"
+                android:id="@+id/distanceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Max speed"
+                android:text="Distance"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 android:textSize="16sp"
@@ -220,7 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Start time"
+                android:text="Time"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 android:textSize="16sp"
@@ -245,7 +253,7 @@
         app:layout_constraintGuide_percent="0.66" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/confirmActivityButton"
+        android:id="@+id/saveRunButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

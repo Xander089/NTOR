@@ -35,8 +35,7 @@
     <color name="status_bar">#0ea5e9</color>
     <color name="preview_green">#38bdf8</color>
     <color name="detail_main_green">#bae6fd</color>
-
-
+    <color name="marker_red">#ED4933</color>
 
 
 </resources>

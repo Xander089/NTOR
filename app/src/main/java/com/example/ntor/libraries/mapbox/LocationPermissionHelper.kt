@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference
 class LocationPermissionHelper(val activity: WeakReference<Activity>) {
     private lateinit var permissionsManager: PermissionsManager
 
-    fun checkPermissions(onMapReady: () -> Unit) {
+    fun checkPermissions(onMapReady: () -> Unit = {}) {
         if (PermissionsManager.areLocationPermissionsGranted(activity.get())) {
             onMapReady()
         } else {

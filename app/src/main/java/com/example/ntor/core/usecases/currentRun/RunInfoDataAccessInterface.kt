@@ -9,7 +9,14 @@ import kotlinx.coroutines.flow.Flow
 interface RunInfoDataAccessInterface {
 
     //RUN
-    suspend fun insertRun(distance: Double, time: Int, date: Long)
+    suspend fun insertRun(
+        distance: Double,
+        time: Int,
+        date: Long,
+        pacing: Double,
+        calories: Double
+    )
+
     fun getLatestRun(): Flow<Run>
     fun getRunsAsFlow(): Flow<List<Run>>
     fun getRunByTime(time: Long): Flow<Run>
@@ -23,7 +30,7 @@ interface RunInfoDataAccessInterface {
     suspend fun insertPoint(runId: Int, latitude: Double, longitude: Double)
 
     //TEMP POINT
-     fun getTempPoints(): Flow<List<Point>>
+    fun getTempPoints(): Flow<List<Point>>
     suspend fun deleteTempPoints()
     suspend fun insertTempPoint(latitude: Double, longitude: Double)
 }

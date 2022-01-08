@@ -19,7 +19,10 @@ data class RunRoomEntity(
     @ColumnInfo(name = "distance") val distance: Double = 0.0,
     @ColumnInfo(name = "time") val time: Int = 0,
     @ColumnInfo(name = "date") val date: Long = 0,
-) {
+    @ColumnInfo(name = "pacing") val pacing: Double = 0.0,
+    @ColumnInfo(name = "calories") val calories: Double = 0.0,
+
+    ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 }

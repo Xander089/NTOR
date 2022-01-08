@@ -11,7 +11,9 @@ object EntityMapper {
     fun RunRoomEntity.toRun(): Run = Run(
         this.distance,
         this.time,
-        this.date
+        this.date,
+        this.pacing,
+        this.calories
     )
 
     fun PointRoomEntity.toPoint(): Point = Point(
@@ -23,7 +25,9 @@ object EntityMapper {
     fun Run.toRunRoomEntity(): RunRoomEntity = RunRoomEntity(
         this.distance,
         this.time,
-        this.date
+        this.date,
+        this.pacing,
+        this.calories
     )
 
     fun Point.toPointRoomEntity(runId: Int): PointRoomEntity = PointRoomEntity(
@@ -34,11 +38,12 @@ object EntityMapper {
     )
 
 
-    fun Point.toCurrentRunPointsRoomEntity(): CurrentRunPointsRoomEntity = CurrentRunPointsRoomEntity(
-        this.latitude,
-        this.longitude,
-        this.time
-    )
+    fun Point.toCurrentRunPointsRoomEntity(): CurrentRunPointsRoomEntity =
+        CurrentRunPointsRoomEntity(
+            this.latitude,
+            this.longitude,
+            this.time
+        )
 
     fun CurrentRunPointsRoomEntity.toPoint(): Point = Point(
         this.latitude,
