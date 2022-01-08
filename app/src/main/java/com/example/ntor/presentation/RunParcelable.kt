@@ -3,9 +3,20 @@ package com.example.ntor.presentation
 import android.os.Parcel
 import android.os.Parcelable
 
-class RunParcelable() : Parcelable {
-    constructor(parcel: Parcel) : this() {
-    }
+class RunParcelable(
+    val distance: Double = 0.0,
+    val time: Int = 0,
+    val date: Long = 0,
+    val pacing: Double = 0.0,
+    val calories: Double = 0.0,
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readDouble(),
+        parcel.readInt(),
+        parcel.readLong(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+    )
 
     override fun describeContents(): Int {
         TODO("Not yet implemented")

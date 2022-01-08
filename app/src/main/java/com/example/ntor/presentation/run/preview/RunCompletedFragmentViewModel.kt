@@ -4,16 +4,19 @@ import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
 import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.RunParcelable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RunCompletedFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBoundary) :
+class RunCompletedFragmentViewModel @Inject constructor(
+    private val boundary: RunInfoIOBoundary,
+    private val dataHelper: DataHelper
+) :
     ViewModel() {
 
-    val dataHelper = DataHelper()
 
     var points: LiveData<List<Point>> = MutableLiveData()
 
@@ -22,11 +25,16 @@ class RunCompletedFragmentViewModel @Inject constructor(private val boundary: Ru
     }
 
     fun createRun(
-        distance: Double,
-        time: Int,
-        date: Long,
-        pacing: Double,
-        calories: Double
-    ) = viewModelScope.launch(Dispatchers.IO) { boundary.insertRun(distance, time, date, pacing, calories) }
+        parcel: RunParcelable
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        boundary.insertRun(
+            parcel.distance,
+            parcel.time,
+            parcel.date,
+            parcel.pacing,
+            parcel.calories
+        )
+    }
+
 
 }

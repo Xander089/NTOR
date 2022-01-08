@@ -13,6 +13,7 @@ import com.example.ntor.databinding.FragmentRunCompletedBinding
 import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.NavigationManager
+import com.example.ntor.presentation.RunParcelable
 import com.example.ntor.presentation.camera.CameraActivity
 import kotlinx.android.synthetic.main.fragment_run.*
 import java.lang.ref.WeakReference
@@ -22,10 +23,7 @@ import java.util.*
 class RunCompletedFragment : Fragment() {
 
     companion object {
-        const val TIME = "time"
-        const val PACING = "pacing"
-        const val CALORIES = "calories"
-        const val DISTANCE = "distance"
+        const val PARCEL = "parcel"
     }
 
     private lateinit var binding: FragmentRunCompletedBinding
@@ -58,20 +56,37 @@ class RunCompletedFragment : Fragment() {
             }
 
             saveRunButton.setOnClickListener {
-//                viewModel.createRun()
-                requireActivity().finish()
+                createRun()
+                finishRunActivity()
             }
 
             closeButton.setOnClickListener {
-                requireActivity().finish()
+                finishRunActivity()
             }
 
-            distanceText.text = arguments?.getString(DISTANCE).orEmpty()
-            runDurationText.text = arguments?.getString(TIME).orEmpty()
-            startTimeText.text = Date().toString()
-            pacingText.text = arguments?.getString(PACING).orEmpty()
-            caloriesText.text = arguments?.getString(CALORIES).orEmpty()
+            populateTextViews()
 
+        }
+    }
+
+    private fun finishRunActivity() = requireActivity().finish()
+
+    private fun createRun() =
+        getRunParcel()?.let {
+            viewModel.createRun(it)
+        }
+
+
+    private fun getRunParcel() = arguments?.getParcelable<RunParcelable>(PARCEL)
+
+    private fun populateTextViews() {
+        val runParcel = getRunParcel()
+        binding.apply {
+            distanceText.text = runParcel?.distance.toString()
+            runDurationText.text = runParcel?.time.toString()
+            startTimeText.text = runParcel?.date.toString()
+            pacingText.text = runParcel?.pacing.toString()
+            caloriesText.text = runParcel?.calories.toString()
         }
     }
 

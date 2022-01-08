@@ -8,7 +8,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class DataHelper {
+ class DataHelper {
 
     companion object {
         private const val EARTH_RADIUS_M = 6371000

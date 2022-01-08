@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.ntor.core.usecases.currentRun.RunInfoDataAccessImpl
 import com.example.ntor.core.usecases.currentRun.RunInfoInteractor
 import com.example.ntor.libraries.room.ApplicationDatabase
+import com.example.ntor.presentation.DataHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,11 @@ class ApplicationModule {
         appContext,
         ApplicationDatabase::class.java, "ntor_database"
     ).build()
+
+    @Singleton
+    @Provides
+    fun provideDataHelper() = DataHelper()
+
 
     @Singleton
     @Provides

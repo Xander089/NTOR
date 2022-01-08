@@ -22,6 +22,7 @@ import com.example.ntor.databinding.FragmentRunBinding
 import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.NavigationManager
+import com.example.ntor.presentation.RunParcelable
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -29,7 +30,7 @@ import java.util.*
 class RunFragment : Fragment(), StopRunDialog.DialogListener {
 
     companion object {
-        private const val ACTION = R.id.action_runFragment_to_runCompletedFragment
+        private const val ACTION_RUN_TO_COMPLETED = R.id.action_runFragment_to_runCompletedFragment
         private const val PAUSE = "PAUSE"
         private const val PLAY = "PLAY"
     }
@@ -86,13 +87,11 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
                 viewModel.stopTimer()
                 viewModel.setTimerState(TimerState.OFF)
                 //showStopRunDialog()
-                val bundle = bundleOf(
-                    "time" to binding.timerTextView.text.toString(),
-                    "calories" to binding.caloriesTextView.text.toString(),
-                    "pacing" to binding.rythmTextView.text.toString(),
-                    "distance" to binding.distanceTextView.text.toString(),
+                NavigationManager.navigateTo(
+                    findNavController(),
+                    ACTION_RUN_TO_COMPLETED,
+                    bundleOf("parcel" to viewModel.buildRunParcelable())
                 )
-                NavigationManager.navigateTo(findNavController(), ACTION, bundle)
 
             }
 
@@ -125,14 +124,14 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
         viewModel.distance.observe(this, { distance ->
             viewModel.updateCalories(distance)
             viewModel.updatePacing(getTimerText(), distance)
-            binding.distanceTextView.text = viewModel.dataHelper.formatDouble(distance)
+            binding.distanceTextView.text = viewModel.formatDouble(distance)
         })
 
         viewModel.calories.observe(this, { calories ->
-            binding.caloriesTextView.text = viewModel.dataHelper.formatDouble(calories)
+            binding.caloriesTextView.text = viewModel.formatDouble(calories)
         })
         viewModel.pacing.observe(this, { pacing ->
-            binding.rythmTextView.text = viewModel.dataHelper.toMinutes(pacing)
+            binding.rythmTextView.text = viewModel.toMinutes(pacing)
         })
     }
 

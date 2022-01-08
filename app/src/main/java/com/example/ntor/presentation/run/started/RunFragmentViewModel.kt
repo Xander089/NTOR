@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
 import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.RunParcelable
 import com.example.ntor.presentation.run.countdown.CountDownVIewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.sql.Time
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.atan2
@@ -23,7 +25,10 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 @HiltViewModel
-class RunFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBoundary) :
+class RunFragmentViewModel @Inject constructor(
+    private val boundary: RunInfoIOBoundary,
+    private val dataHelper: DataHelper
+) :
     ViewModel() {
 
     companion object {
@@ -32,7 +37,10 @@ class RunFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBo
         private const val RESET_TIME = "00:00:00"
     }
 
-    val dataHelper = DataHelper()
+    fun formatDouble(number: Double) = dataHelper.formatDouble(number)
+    fun toMinutes(minutes: Double) = dataHelper.toMinutes(minutes)
+    fun toTime(seconds: Int) = dataHelper.toTime(seconds)
+
     private var countDownTimer: Flow<Int> = dataHelper.provideCountDownTimer(0, MAX_TIME)
     private lateinit var timerJob: Job
 
@@ -55,6 +63,16 @@ class RunFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBo
     private var userMotionState = UserMotion.STILL
     fun setUserMotionState(state: UserMotion) {
         userMotionState = state
+    }
+
+    fun buildRunParcelable() : RunParcelable {
+        val distance: Double = _distance.value ?: 0.0
+        val time: Int = dataHelper.toSeconds(_timerText.value.orEmpty())
+        val date: Long = Date().time
+        val pacing: Double = _pacing.value ?: 0.0
+        val calories: Double = _calories.value ?: 0.0
+
+        return RunParcelable(distance, time, date, pacing, calories)
     }
 
     private fun isUserMoving() = userMotionState == UserMotion.MOVING
