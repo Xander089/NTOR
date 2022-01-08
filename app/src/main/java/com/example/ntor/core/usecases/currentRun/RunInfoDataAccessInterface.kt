@@ -4,6 +4,8 @@ import com.example.ntor.core.entities.Point
 import com.example.ntor.core.entities.Run
 import kotlinx.coroutines.flow.Flow
 
+
+//Boundary to separate the use case interactor from the room dao
 interface RunInfoDataAccessInterface {
 
     //RUN
@@ -21,7 +23,7 @@ interface RunInfoDataAccessInterface {
     suspend fun insertPoint(runId: Int, latitude: Double, longitude: Double)
 
     //TEMP POINT
-    suspend fun getTempPoints(): List<Point>
+     fun getTempPoints(): Flow<List<Point>>
     suspend fun deleteTempPoints()
     suspend fun insertTempPoint(latitude: Double, longitude: Double)
 }

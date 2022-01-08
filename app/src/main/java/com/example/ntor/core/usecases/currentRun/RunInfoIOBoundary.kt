@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
 
+//Boundary to separate the use case interactor from the controller/presentation layer (the viewModels)
 interface RunInfoIOBoundary {
 
     //RUN
@@ -27,7 +28,7 @@ interface RunInfoIOBoundary {
     suspend fun insertPoint(runId: Int, latitude: Double, longitude: Double)
 
     //TEMP POINT
-    suspend fun getTempPoints(): List<Point>
+     fun getTempPoints(): Flow<List<Point>>
     suspend fun deleteTempPoints()
     suspend fun insertCurrentPoint(latitude: Double, longitude: Double)
 

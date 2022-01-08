@@ -21,6 +21,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.run.RunActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"

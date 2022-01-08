@@ -51,6 +51,6 @@ interface ApplicationDao {
     suspend fun deleteTempPoints()
 
     @Query("SELECT * FROM CurrentRunPointsRoomEntity")
-    suspend fun getTempPoints(): List<CurrentRunPointsRoomEntity>
+     fun getTempPoints(): Flow<List<CurrentRunPointsRoomEntity>>
 
 }

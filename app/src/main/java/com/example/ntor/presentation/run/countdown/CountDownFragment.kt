@@ -28,6 +28,11 @@ class CountDownFragment : Fragment() {
 
         binding = FragmentCountDownBinding.inflate(inflater, container, false)
 
+        binding.startNowTextView.setOnClickListener {
+            viewModel.stopTimer()
+            NavigationManager.navigateTo(findNavController(), ACTION)
+        }
+
         initObserver()
 
         viewModel.startTimer()

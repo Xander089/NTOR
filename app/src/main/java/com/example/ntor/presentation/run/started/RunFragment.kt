@@ -27,6 +27,8 @@ class RunFragment : Fragment() {
 
     companion object {
         private const val ACTION = R.id.action_runFragment_to_runCompletedFragment
+        private const val PAUSE = "PAUSE"
+        private const val PLAY = "PLAY"
     }
 
     private val viewModel: RunFragmentViewModel by activityViewModels()
@@ -45,12 +47,6 @@ class RunFragment : Fragment() {
     private val mapboxManager = MapboxManager(
         handlePositionReading = { latitude, longitude ->
             viewModel.insertNewPosition(latitude, longitude)
-
-            val time = Date().time
-            if (time - viewModel.lastInsertion > 2000) {
-                binding.caloriesTextView.text = latitude.toString()
-            }
-
         }
     )
 
@@ -59,13 +55,12 @@ class RunFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        initMotionSensor()
-
         binding = FragmentRunBinding.inflate(inflater, container, false)
         mapboxManager.setMapView(binding.mapView)
         locationPermissionHelper = LocationPermissionHelper(WeakReference(requireActivity()))
         locationPermissionHelper.checkPermissions { mapboxManager.onMapReady(requireContext()) }
 
+        initMotionSensor()
         initLayout()
         initObservers()
 
@@ -85,10 +80,59 @@ class RunFragment : Fragment() {
                 toggleButtonVisibility(stopRunButton)
             }
             stopRunButton.setOnClickListener {
+                viewModel.stopTimer()
+                viewModel.setTimerState(TimerState.OFF)
                 NavigationManager.navigateTo(findNavController(), ACTION)
+            }
+
+            pauseRunButton.setOnClickListener {
+                handlePauseButton(pauseRunButton)
             }
         }
     }
+
+    private fun initObservers() {
+        viewModel.timerText.observe(this, { time ->
+            binding.timerTextView.text = time
+        })
+
+        viewModel.points.observe(this, { points ->
+            viewModel.updateDistance(points)
+        })
+
+        viewModel.distance.observe(this, { distance ->
+            viewModel.updateCalories(distance)
+            viewModel.updatePacing(getTimerText(), distance)
+            binding.distanceTextView.text = viewModel.dataHelper.formatDouble(distance)
+        })
+
+        viewModel.calories.observe(this, { calories ->
+            binding.caloriesTextView.text = viewModel.dataHelper.formatDouble(calories)
+        })
+        viewModel.pacing.observe(this, { pacing ->
+            binding.rythmTextView.text = viewModel.dataHelper.toMinutes(pacing)
+        })
+    }
+
+    private fun handlePauseButton(button: Button) {
+
+        val buttonText = button.text.toString()
+
+        if (buttonText == PAUSE) {
+            viewModel.stopTimer()
+            viewModel.setTimerState(TimerState.OFF)
+            button.text = PLAY
+            button.setBackgroundColor(requireActivity().resources.getColor(R.color.green, null))
+        } else {
+            viewModel.startTimer(getTimerText())
+            viewModel.setTimerState(TimerState.ON)
+            button.text = PAUSE
+            button.setBackgroundColor(requireActivity().resources.getColor(R.color.orange, null))
+        }
+
+    }
+
+    private fun getTimerText() = binding.timerTextView.text.toString()
 
     private fun toggleButtonVisibility(button: Button) {
         if (button.visibility == View.VISIBLE) {
@@ -98,11 +142,8 @@ class RunFragment : Fragment() {
         }
     }
 
-    private fun initObservers() {
-        viewModel.latestRun.observe(requireActivity(), {
-            Log.v("idd", it.time.toString())
-        })
-    }
+
+    //LIFE CYCLE CALLBACKS
 
     override fun onDestroy() {
         super.onDestroy()

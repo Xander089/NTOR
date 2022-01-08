@@ -33,7 +33,7 @@ class RunInfoInteractor(
     override suspend fun insertPoint(runId: Int, latitude: Double, longitude: Double) =
         dataAccess.insertPoint(runId, latitude, longitude)
 
-    override suspend fun getTempPoints(): List<Point> = dataAccess.getTempPoints()
+    override  fun getTempPoints(): Flow<List<Point>> = dataAccess.getTempPoints()
 
     override suspend fun deleteTempPoints() = dataAccess.deleteTempPoints()
 

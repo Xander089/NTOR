@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class RunInfoDataAccessImpl(private val dao: ApplicationDao) : RunInfoDataAccessInterface {
-    
+
 
     //RUN
     override suspend fun insertRun(distance: Double, time: Int, date: Long) =
@@ -50,7 +50,7 @@ class RunInfoDataAccessImpl(private val dao: ApplicationDao) : RunInfoDataAccess
         )
 
     //TEMP POINT
-    override suspend fun getTempPoints(): List<Point> = dao.getTempPoints().map { it.toPoint() }
+    override  fun getTempPoints(): Flow<List<Point>> = dao.getTempPoints().map { list -> list.map { it.toPoint() } }
     override suspend fun deleteTempPoints() = dao.deleteTempPoints()
     override suspend fun insertTempPoint(latitude: Double, longitude: Double) =
         dao.insertTempPoint(

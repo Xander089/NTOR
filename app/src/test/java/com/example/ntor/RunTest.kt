@@ -8,7 +8,7 @@ import org.junit.Test
 class RunTest {
 
     private fun createRun(
-        distance: Float,
+        distance: Double,
         time: Int
     ) = Run(
         distance = distance,
@@ -17,8 +17,8 @@ class RunTest {
 
     @Test
     fun `when distance is 100 m and time is 10 seconds then avgSpeed is 10`() {
-        val run = createRun(100.0f,10)
-        Assert.assertEquals(10.0f, run.avgSpeed)
+        val run = createRun(100.0,10)
+        Assert.assertEquals(10.0, run.avgSpeed)
     }
 
 
