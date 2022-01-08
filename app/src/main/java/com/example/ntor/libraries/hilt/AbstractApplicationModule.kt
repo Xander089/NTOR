@@ -1,9 +1,9 @@
 package com.example.ntor.libraries.hilt
 
-import com.example.ntor.core.usecases.currentRun.CurrentRunBoundaryService
-import com.example.ntor.core.usecases.currentRun.CurrentRunInteractor
-import com.example.ntor.core.usecases.showPastRunInfo.RunInfoBoundaryService
-import com.example.ntor.core.usecases.showPastRunInfo.RunInfoInteractor
+import com.example.ntor.core.usecases.currentRun.RunInfoDataAccessImpl
+import com.example.ntor.core.usecases.currentRun.RunInfoDataAccessInterface
+import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
+import com.example.ntor.core.usecases.currentRun.RunInfoInteractor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,10 +16,10 @@ abstract class AbstractApplicationModule {
 
     @Singleton
     @Binds
-    abstract fun bindRunInfoBoundary(interactor: RunInfoInteractor): RunInfoBoundaryService
+    abstract fun bindCurrentRunBoundary(interactor: RunInfoInteractor): RunInfoIOBoundary
 
     @Singleton
     @Binds
-    abstract fun bindCurrentRunBoundary(interactor: CurrentRunInteractor): CurrentRunBoundaryService
+    abstract fun bindCurrentRunDataAccessInterface(dataAccessImpl: RunInfoDataAccessImpl): RunInfoDataAccessInterface
 
 }

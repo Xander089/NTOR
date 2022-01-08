@@ -1,10 +1,16 @@
-package com.example.ntor.core.usecases.showPastRunInfo
+package com.example.ntor.core.usecases.currentRun
 
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.entities.Run
+import com.example.ntor.core.usecases.EntityMapper.toRun
+import com.example.ntor.libraries.room.CurrentRunPointsRoomEntity
+import com.example.ntor.libraries.room.PointRoomEntity
+import com.example.ntor.libraries.room.RunRoomEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import java.util.*
 
-interface RunInfoBoundaryService {
+interface RunInfoIOBoundary {
 
     //RUN
     fun getLatestRun(): Flow<Run>
@@ -24,4 +30,6 @@ interface RunInfoBoundaryService {
     suspend fun getTempPoints(): List<Point>
     suspend fun deleteTempPoints()
     suspend fun insertCurrentPoint(latitude: Double, longitude: Double)
+
+
 }

@@ -1,9 +1,7 @@
 package com.example.ntor.presentation.run.started
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.ntor.core.usecases.currentRun.CurrentRunBoundaryService
-import com.example.ntor.core.usecases.currentRun.CurrentRunInteractor
+import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,7 +9,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class RunFragmentViewModel @Inject constructor(private val boundary: CurrentRunInteractor) :
+class RunFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBoundary) :
     ViewModel() {
 
     val lastInsertion: Long = Date().time

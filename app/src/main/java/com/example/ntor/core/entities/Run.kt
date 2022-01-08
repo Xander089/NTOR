@@ -10,14 +10,14 @@ fun main() {
 
 
 data class Run(
-    val distance: Float = 0.0f,
+    val distance: Double = 0.0,
     val time: Int = 0,
     val date: Long = 0,
 ) {
 
-    val avgSpeed: Float
+    val avgSpeed: Double
         get() = if (this.time == 0) {
-            0.0f
+            0.0
         } else {
             this.distance / this.time
         }
