@@ -18,6 +18,7 @@ interface RunInfoDataAccessInterface {
     )
 
     fun getLatestRun(): Flow<Run>
+    fun getLatestRunId(): Flow<Int>
     fun getRunsAsFlow(): Flow<List<Run>>
     fun getRunByTime(time: Long): Flow<Run>
     suspend fun deleteRunById(runId: Int)

@@ -15,6 +15,8 @@ interface RunInfoIOBoundary {
 
     //RUN
     fun getLatestRun(): Flow<Run>
+    fun getLatestRunId(): Flow<Int>
+
     suspend fun insertRun(
         distance: Double,
         time: Int,

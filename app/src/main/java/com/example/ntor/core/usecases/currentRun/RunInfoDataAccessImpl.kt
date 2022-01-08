@@ -27,6 +27,8 @@ class RunInfoDataAccessImpl(private val dao: ApplicationDao) : RunInfoDataAccess
         dao.insertRun(RunRoomEntity(distance, time, date,pacing,calories))
 
     override fun getLatestRun(): Flow<Run> = dao.getLatestRun().map { it.toRun() }
+    override fun getLatestRunId(): Flow<Int> = dao.getLatestId()
+
     override fun getRunsAsFlow(): Flow<List<Run>> = dao.getRunsAsFlow().map { list ->
         list.map { runEntity ->
             runEntity.toRun()

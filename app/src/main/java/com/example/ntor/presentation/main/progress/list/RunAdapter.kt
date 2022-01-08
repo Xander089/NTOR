@@ -9,8 +9,8 @@ import com.example.ntor.databinding.ItemRunBinding
 
 class RunAdapter(
     private val _runs: MutableList<Run>,
-    private val openWorkoutDetail: (id: Int) -> Unit = {},
-    private val showBottomModal: (Int) -> Unit = {},
+    private val openDetail: (Long) -> Unit = {},
+    private val showBottomModal: (Long) -> Unit = {},
 ) : RecyclerView.Adapter<RunAdapter.PlaylistViewHolder>() {
 
 
@@ -28,10 +28,19 @@ class RunAdapter(
 
         fun bind(
             run: Run,
-            openWorkoutDetail: (id: Int) -> Unit,
-            showBottomModal: (id: Int) -> Unit,
-        ) {}
+            openDetail: (id: Long) -> Unit,
+            showBottomModal: (id: Long) -> Unit,
+        ) {
+            binding.root.setOnClickListener {
+                openDetail(run.date)
+            }
+
+            binding.root.setOnLongClickListener {
+                showBottomModal(run.date)
+                true
+            }
         }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
@@ -42,7 +51,7 @@ class RunAdapter(
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         val playlist = _runs[position]
-        holder.bind(playlist, openWorkoutDetail, showBottomModal)
+        holder.bind(playlist, openDetail, showBottomModal)
     }
 
     override fun getItemCount(): Int = _runs.size

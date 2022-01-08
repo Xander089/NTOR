@@ -6,7 +6,7 @@ data class Run(
     val time: Int = 0,
     val date: Long = 0,
     val pacing: Double = 0.0,
-    val calories: Double = 0.0,
+    val calories: Double = 0.0
 ) {
 
     val avgSpeed: Double

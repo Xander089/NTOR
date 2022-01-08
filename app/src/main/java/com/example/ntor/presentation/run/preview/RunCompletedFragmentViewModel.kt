@@ -7,6 +7,7 @@ import com.example.ntor.presentation.DataHelper
 import com.example.ntor.presentation.RunParcelable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +20,7 @@ class RunCompletedFragmentViewModel @Inject constructor(
 
 
     var points: LiveData<List<Point>> = MutableLiveData()
+    private val latestRunId = boundary.getLatestRunId().asLiveData()
 
     fun setupRoute() {
         points = boundary.getTempPoints().asLiveData()
@@ -34,6 +36,14 @@ class RunCompletedFragmentViewModel @Inject constructor(
             parcel.pacing,
             parcel.calories
         )
+        insertPoints()
+    }
+
+    private suspend fun insertPoints() {
+        val id = latestRunId.value ?: 0
+        points.value?.forEach {
+            boundary.insertPoint(id,it.latitude,it.longitude)
+        }
     }
 
 

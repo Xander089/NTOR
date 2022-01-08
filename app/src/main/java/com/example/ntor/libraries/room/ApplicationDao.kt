@@ -11,6 +11,9 @@ interface ApplicationDao {
 
 
     //RUN
+    @Query("SELECT id FROM RunRoomEntity ORDER BY id DESC LIMIT 1")
+    fun getLatestId(): Flow<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRun(run: RunRoomEntity)
 
