@@ -48,7 +48,7 @@ class AllRunsFragment : Fragment() {
     }
 
     private fun buildAdapter() {
-        runAdapter = RunAdapter(mutableListOf<Run>(),
+        runAdapter = RunAdapter(
             openDetail = { date ->
 
                 NavigationManager.navigateTo(
@@ -60,8 +60,14 @@ class AllRunsFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.runs.observe(requireActivity(), {
-            runAdapter.updateRuns(it)
+        viewModel.runs.observe(requireActivity(), { runs ->
+            runAdapter.updateRuns(runs)
+
+            binding.apply {
+                activitiesTextView.text = viewModel.formatActivities(runs)
+                distanceTextView.text = viewModel.formatDistance(runs)
+                timeTextView.text = viewModel.formatTime(runs)
+            }
         })
     }
 

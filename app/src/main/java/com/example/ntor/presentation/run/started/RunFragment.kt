@@ -23,10 +23,12 @@ import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.NavigationManager
 import com.example.ntor.presentation.RunParcelable
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 import java.util.*
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class RunFragment : Fragment(), StopRunDialog.DialogListener {
 
     companion object {
@@ -35,7 +37,6 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
         private const val PLAY = "PLAY"
     }
 
-    private val viewModel: RunFragmentViewModel by activityViewModels()
 
     //Significant Motion sensor: triggered to detect when user is moving
     private lateinit var sensorManager: SensorManager
@@ -46,13 +47,11 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
         }
     }
 
-    private lateinit var binding: FragmentRunBinding
+    @Inject
+    lateinit var mapboxManager : MapboxManager
     private lateinit var locationPermissionHelper: LocationPermissionHelper
-    private val mapboxManager = MapboxManager(
-        handlePositionReading = { latitude, longitude ->
-            viewModel.insertNewPosition(latitude, longitude)
-        }
-    )
+    private lateinit var binding: FragmentRunBinding
+    private val viewModel: RunFragmentViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,15 +59,22 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
     ): View {
 
         binding = FragmentRunBinding.inflate(inflater, container, false)
-        mapboxManager.setMapView(binding.mapView)
-        locationPermissionHelper = LocationPermissionHelper(WeakReference(requireActivity()))
-        locationPermissionHelper.checkPermissions { mapboxManager.onMapReady(requireContext()) }
 
+        setupMapBox()
         initMotionSensor()
         initLayout()
         initObservers()
 
         return binding.root
+    }
+
+    private fun setupMapBox(){
+        mapboxManager.setMapBoxHandlePosition{ latitude, longitude ->
+            viewModel.insertNewPosition(latitude, longitude)
+        }
+        mapboxManager.setMapView(binding.mapView)
+        locationPermissionHelper = LocationPermissionHelper(WeakReference(requireActivity()))
+        locationPermissionHelper.checkPermissions { mapboxManager.onMapReady(requireContext()) }
     }
 
     private fun initMotionSensor() {
@@ -94,7 +100,6 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
                 )
 
             }
-
             pauseRunButton.setOnClickListener {
                 handlePauseButton(pauseRunButton)
             }

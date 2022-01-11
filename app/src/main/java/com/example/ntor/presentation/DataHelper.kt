@@ -3,25 +3,52 @@ package com.example.ntor.presentation
 import com.example.ntor.core.entities.Point
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import java.util.*
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
- class DataHelper {
+object DataHelper {
 
-    companion object {
-        private const val EARTH_RADIUS_M = 6371000
-        private const val RESET_TIME = "00:00:00"
-        private const val ZERO = "0"
-        private const val LB_KG = 0.4536
-        private const val TO_KM = 1000.0
-        private const val FACTOR = 0.75
-        private const val MILES_KM = 1.608
-        private const val AVG_WEIGHT_KG = 70.0
-        private const val AVG_CONSUMPTION_PER_KM = AVG_WEIGHT_KG / LB_KG * FACTOR / MILES_KM
 
+    private const val EARTH_RADIUS_M = 6371000
+    private const val RESET_TIME = "00:00:00"
+    private const val ZERO = "0"
+    private const val LB_KG = 0.4536
+    private const val TO_KM = 1000.0
+    private const val FACTOR = 0.75
+    private const val MILES_KM = 1.608
+    private const val AVG_WEIGHT_KG = 70.0
+    private const val AVG_CONSUMPTION_PER_KM = AVG_WEIGHT_KG / LB_KG * FACTOR / MILES_KM
+
+    private val monthMap = mapOf<String,String>(
+        "Jan" to "01",
+        "Feb" to "02",
+        "Mar" to "03",
+        "Apr" to "04",
+        "May" to "05",
+        "Jun" to "06",
+        "Jul" to "07",
+        "Aug" to "08",
+        "Sep" to "09",
+        "Oct" to "10",
+        "Nov" to "11",
+        "Dec" to "12",
+    )
+
+    fun formatNumber(number: Double): String{
+        val numString = number.toString()
+        val pointPosition = numString.indexOf(".")
+        val formatted = numString.substring(0,pointPosition+2)
+        return "$formatted km"
     }
+
+    fun formatDate(time: Long) : String{
+        val split = Date(time).toString().split(" ")
+        return "${monthMap[split[1]]}/${split[2]}/${split[5]}"
+    }
+
 
     fun provideCountDownTimer(currentTime: Int, maxTime: Int) =
         flow {

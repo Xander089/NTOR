@@ -26,8 +26,7 @@ import kotlin.math.sqrt
 
 @HiltViewModel
 class RunFragmentViewModel @Inject constructor(
-    private val boundary: RunInfoIOBoundary,
-    private val dataHelper: DataHelper
+    private val boundary: RunInfoIOBoundary
 ) :
     ViewModel() {
 
@@ -37,11 +36,11 @@ class RunFragmentViewModel @Inject constructor(
         private const val RESET_TIME = "00:00:00"
     }
 
-    fun formatDouble(number: Double) = dataHelper.formatDouble(number)
-    fun toMinutes(minutes: Double) = dataHelper.toMinutes(minutes)
-    fun toTime(seconds: Int) = dataHelper.toTime(seconds)
+    fun formatDouble(number: Double) = DataHelper.formatDouble(number)
+    fun toMinutes(minutes: Double) = DataHelper.toMinutes(minutes)
+    fun toTime(seconds: Int) = DataHelper.toTime(seconds)
 
-    private var countDownTimer: Flow<Int> = dataHelper.provideCountDownTimer(0, MAX_TIME)
+    private var countDownTimer: Flow<Int> = DataHelper.provideCountDownTimer(0, MAX_TIME)
     private lateinit var timerJob: Job
 
     val points = boundary.getTempPoints().asLiveData()
@@ -67,7 +66,7 @@ class RunFragmentViewModel @Inject constructor(
 
     fun buildRunParcelable() : RunParcelable {
         val distance: Double = _distance.value ?: 0.0
-        val time: Int = dataHelper.toSeconds(_timerText.value.orEmpty())
+        val time: Int = DataHelper.toSeconds(_timerText.value.orEmpty())
         val date: Long = Date().time
         val pacing: Double = _pacing.value ?: 0.0
         val calories: Double = _calories.value ?: 0.0
@@ -85,12 +84,12 @@ class RunFragmentViewModel @Inject constructor(
     private fun isTimerStateOn() = timerState == TimerState.ON
 
     fun updatePacing(time: String, distance: Double) {
-        val seconds = dataHelper.toSeconds(time)
-        _pacing.value = dataHelper.calculateMinutesPerKm(seconds, distance)
+        val seconds = DataHelper.toSeconds(time)
+        _pacing.value = DataHelper.calculateMinutesPerKm(seconds, distance)
     }
 
     fun updateCalories(distance: Double) {
-        _calories.value = dataHelper.calculateCalories(distance)
+        _calories.value = DataHelper.calculateCalories(distance)
     }
 
     fun updateDistance(points: List<Point>) {
@@ -100,7 +99,7 @@ class RunFragmentViewModel @Inject constructor(
             else -> {
                 val currentDistance = _distance.value ?: 0.0
                 val lastTwoPoints = points.takeLast(2)
-                _distance.value = dataHelper.calculateDistance(currentDistance, lastTwoPoints)
+                _distance.value = DataHelper.calculateDistance(currentDistance, lastTwoPoints)
             }
         }
     }
@@ -115,11 +114,11 @@ class RunFragmentViewModel @Inject constructor(
 
 
     fun startTimer(time: String) {
-        countDownTimer = dataHelper.provideCountDownTimer(dataHelper.toSeconds(time), MAX_TIME)
+        countDownTimer = DataHelper.provideCountDownTimer(DataHelper.toSeconds(time), MAX_TIME)
         timerJob = viewModelScope.launch {
             countDownTimer.cancellable()
                 .collect { seconds ->
-                    _timerText.value = dataHelper.toTime(seconds)
+                    _timerText.value = DataHelper.toTime(seconds)
 
                 }
         }

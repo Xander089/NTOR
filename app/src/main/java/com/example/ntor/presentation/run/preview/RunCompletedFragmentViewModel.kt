@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RunCompletedFragmentViewModel @Inject constructor(
-    private val boundary: RunInfoIOBoundary,
-    private val dataHelper: DataHelper
+    private val boundary: RunInfoIOBoundary
 ) :
     ViewModel() {
 

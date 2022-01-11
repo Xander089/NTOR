@@ -10,15 +10,23 @@ import com.example.ntor.R
 import com.example.ntor.databinding.FragmentCountDownBinding
 import com.example.ntor.databinding.FragmentRunBinding
 import com.example.ntor.presentation.NavigationManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class CountDownFragment : Fragment() {
 
     companion object {
         private const val ACTION = R.id.action_countDownFragment_to_runFragment
     }
 
-    private val viewModel = CountDownVIewModel()
+    @Inject
+    lateinit var viewModel: CountDownVIewModel
+
+    @Inject
+    lateinit var player: CountDownAudioPlayer
+
     private lateinit var binding: FragmentCountDownBinding
 
     override fun onCreateView(
@@ -28,16 +36,32 @@ class CountDownFragment : Fragment() {
 
         binding = FragmentCountDownBinding.inflate(inflater, container, false)
 
-        binding.startNowTextView.setOnClickListener {
-            viewModel.stopTimer()
-            NavigationManager.navigateTo(findNavController(), ACTION)
-        }
-
+        initLayout()
         initObserver()
 
+        player.start(requireContext(), R.raw.countdown)
         viewModel.startTimer()
 
         return binding.root
+    }
+
+    private fun initLayout() {
+        binding.apply {
+            startNowTextView.setOnClickListener {
+                viewModel.stopTimer()
+                player.release()
+                NavigationManager.navigateTo(findNavController(), ACTION)
+            }
+            addSecondsButton.setOnClickListener {
+                viewModel.addSeconds(
+                    10,
+                    countDownTextView.text.toString()
+                )
+            }
+
+        }
+
+
     }
 
     private fun initObserver() {
@@ -51,6 +75,16 @@ class CountDownFragment : Fragment() {
         if (time == 0) {
             NavigationManager.navigateTo(findNavController(), ACTION)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        player.start(requireContext(), R.raw.countdown)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        player.release()
     }
 
 }

@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import javax.inject.Inject
 
-class RunInfoDataAccessImpl(private val dao: ApplicationDao) : RunInfoDataAccessInterface {
+class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao) : RunInfoDataAccessInterface {
 
 
     //RUN

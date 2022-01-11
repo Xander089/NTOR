@@ -55,22 +55,11 @@ class CountDownVIewModel : ViewModel() {
         timerJob.cancel()
     }
 
-    private fun toTime(seconds: Int): String {
-
-        if (seconds <= 0) {
-            return RESET_TIME
-        }
-
-        val hour = seconds / 3600
-        var remainderSeconds = seconds % 3600
-        val minutes = remainderSeconds / 60
-        remainderSeconds %= 60
-
-        val h = if (hour < 10) "$ZERO$hour" else "$hour"
-        val m = if (minutes < 10) "$ZERO$minutes" else "$minutes"
-        val s = if (remainderSeconds < 10) "$ZERO$remainderSeconds" else "$remainderSeconds"
-
-        return "$h:$m:$s"
+    fun addSeconds(seconds: Int, time: String) {
+        stopTimer()
+        countDownTimer = provideCountDownTimer( seconds  + time.toInt())
+        startTimer()
     }
+
 
 }

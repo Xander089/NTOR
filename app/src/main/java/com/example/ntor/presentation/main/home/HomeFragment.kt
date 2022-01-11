@@ -9,15 +9,19 @@ import com.example.ntor.databinding.FragmentHomeBinding
 import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.run.RunActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var locationPermissionHelper: LocationPermissionHelper
-    private val mapboxManager = MapboxManager()
+
+    @Inject
+    lateinit var mapboxManager: MapboxManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

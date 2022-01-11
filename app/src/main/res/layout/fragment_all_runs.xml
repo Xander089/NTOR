@@ -8,11 +8,11 @@
     android:background="@color/detail_bkg"
     tools:context=".presentation.main.progress.detail.RunDetailFragment">
 
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         app:cardCornerRadius="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,9 +90,9 @@
                 android:text="0"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toTopOf="@+id/activitiesLabel"
-                app:layout_constraintEnd_toEndOf="@+id/activitiesLabel"
-                app:layout_constraintStart_toStartOf="@+id/activitiesLabel" />
+                app:layout_constraintBottom_toTopOf="@+id/speedLabel"
+                app:layout_constraintEnd_toEndOf="@+id/speedLabel"
+                app:layout_constraintStart_toStartOf="@+id/speedLabel" />
 
             <TextView
                 android:id="@+id/statisticsLabel"
@@ -114,16 +114,17 @@
                 android:layout_height="wrap_content"
                 android:text="00:00"
                 android:textColor="@color/text_timer"
-                android:textSize="34sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/activitiesTextView"
                 app:layout_constraintEnd_toEndOf="@+id/totalTimeLabel"
-                app:layout_constraintStart_toStartOf="@+id/totalTimeLabel" />
+                app:layout_constraintStart_toStartOf="@+id/totalTimeLabel"
+                app:layout_constraintTop_toTopOf="@+id/activitiesTextView" />
 
             <TextView
                 android:id="@+id/distanceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Distance"
+                android:text="Distance [km]"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 app:layout_constraintBottom_toBottomOf="@+id/totalTimeLabel"
@@ -132,7 +133,7 @@
                 app:layout_constraintTop_toTopOf="@+id/totalTimeLabel" />
 
             <TextView
-                android:id="@+id/activitiesLabel"
+                android:id="@+id/speedLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Activities"
@@ -161,10 +162,10 @@
                 android:text="Time"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
-                app:layout_constraintBottom_toBottomOf="@+id/activitiesLabel"
+                app:layout_constraintBottom_toBottomOf="@+id/speedLabel"
                 app:layout_constraintEnd_toStartOf="@+id/guideline4"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toTopOf="@+id/activitiesLabel" />
+                app:layout_constraintTop_toTopOf="@+id/speedLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

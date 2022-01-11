@@ -27,10 +27,14 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListen
 import com.mapbox.maps.plugin.locationcomponent.location
 
 class MapboxManager(
-    private val handlePositionReading: (Double, Double) -> Unit = { _, _ -> }
 ) {
 
+    private var handlePositionReading: (Double, Double) -> Unit = { _, _ -> }
     private lateinit var mapView: MapView
+
+    fun setMapBoxHandlePosition(lambda : (Double, Double) -> Unit){
+       handlePositionReading = lambda
+    }
 
     fun setMapView(_mapView: MapView) {
         this.mapView = _mapView

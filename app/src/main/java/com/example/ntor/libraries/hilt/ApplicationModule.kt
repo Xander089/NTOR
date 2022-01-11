@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.example.ntor.core.usecases.currentRun.RunInfoDataAccessImpl
 import com.example.ntor.core.usecases.currentRun.RunInfoInteractor
+import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.libraries.room.ApplicationDatabase
 import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.run.countdown.CountDownAudioPlayer
+import com.example.ntor.presentation.run.countdown.CountDownVIewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +18,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ApplicationModule {
+object ApplicationModule {
 
     @Singleton
     @Provides
@@ -23,10 +26,6 @@ class ApplicationModule {
         appContext,
         ApplicationDatabase::class.java, "ntor_database"
     ).build()
-
-    @Singleton
-    @Provides
-    fun provideDataHelper() = DataHelper()
 
 
     @Singleton
@@ -39,5 +38,14 @@ class ApplicationModule {
     fun provideCurrentRunInteractor(dataAccessImpl: RunInfoDataAccessImpl) =
         RunInfoInteractor(dataAccessImpl)
 
+    @Provides
+    fun provideCountDownViewModel() = CountDownVIewModel()
+
+    @Singleton
+    @Provides
+    fun provideCountDownPlayer() = CountDownAudioPlayer()
+
+    @Provides
+    fun provideMapboxManager() = MapboxManager()
 
 }

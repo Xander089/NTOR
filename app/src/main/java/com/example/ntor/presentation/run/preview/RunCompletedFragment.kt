@@ -18,6 +18,7 @@ import com.example.ntor.presentation.camera.CameraActivity
 import kotlinx.android.synthetic.main.fragment_run.*
 import java.lang.ref.WeakReference
 import java.util.*
+import javax.inject.Inject
 
 
 class RunCompletedFragment : Fragment() {
@@ -27,7 +28,10 @@ class RunCompletedFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentRunCompletedBinding
-    private val mapboxManager = MapboxManager()
+
+    @Inject
+    lateinit var mapboxManager : MapboxManager
+
     private val viewModel: RunCompletedFragmentViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -80,13 +84,14 @@ class RunCompletedFragment : Fragment() {
     private fun getRunParcel() = arguments?.getParcelable<RunParcelable>(PARCEL)
 
     private fun populateTextViews() {
-        val runParcel = getRunParcel()
-        binding.apply {
-            distanceText.text = runParcel?.distance.toString()
-            runDurationText.text = runParcel?.time.toString()
-            startTimeText.text = runParcel?.date.toString()
-            pacingText.text = runParcel?.pacing.toString()
-            caloriesText.text = runParcel?.calories.toString()
+        getRunParcel().let { runParcel ->
+            binding.apply {
+                distanceText.text = runParcel?.distance.toString()
+                runDurationText.text = runParcel?.time.toString()
+                startTimeText.text = runParcel?.date.toString()
+                pacingText.text = runParcel?.pacing.toString()
+                caloriesText.text = runParcel?.calories.toString()
+            }
         }
     }
 

@@ -26,6 +26,9 @@ interface ApplicationDao {
     @Query("SELECT * FROM RunRoomEntity ORDER BY id LIMIT 1")
     fun getLatestRun(): Flow<RunRoomEntity>
 
+    @Query("SELECT * FROM RunRoomEntity ORDER BY id LIMIT 1")
+    fun getLatestRunInNonUIThread(): RunRoomEntity
+
     @Query("DELETE FROM RunRoomEntity WHERE id = :runId")
     suspend fun deleteRunById(runId: Int)
 

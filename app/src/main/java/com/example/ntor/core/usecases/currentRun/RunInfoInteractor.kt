@@ -3,8 +3,9 @@ package com.example.ntor.core.usecases.currentRun
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.entities.Run
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class RunInfoInteractor(
+class RunInfoInteractor @Inject constructor(
     private val dataAccess: RunInfoDataAccessInterface
 ) : RunInfoIOBoundary {
 
