@@ -11,6 +11,9 @@ class RunInfoInteractor @Inject constructor(
 
     override fun getLatestRun(): Flow<Run> = dataAccess.getLatestRun()
     override fun getLatestRunId(): Flow<Int> = dataAccess.getLatestRunId()
+    override suspend fun getRunIdByDate(date: Long): Int = dataAccess.getRunIdByDate(date)
+    override fun getRunIdByDateAsFlow(date: Long): Flow<Int> = dataAccess.getRunIdByDateAsFlow(date)
+    override suspend fun getLastId(): Int = dataAccess.getLastId()
 
     override suspend fun insertRun(
         distance: Double,
@@ -29,6 +32,9 @@ class RunInfoInteractor @Inject constructor(
     override fun getRunByTime(time: Long): Flow<Run> = dataAccess.getRunByTime(time)
 
     override suspend fun deleteRunById(runId: Int) = dataAccess.deleteRunById(runId)
+    override suspend fun deleteRunByDate(date: Long) {
+        dataAccess.deleteRunByDate(date)
+    }
 
     override suspend fun getPointByTime(time: Long): Point = dataAccess.getPointByTime(time)
 

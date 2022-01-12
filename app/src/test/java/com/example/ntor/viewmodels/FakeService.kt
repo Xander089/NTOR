@@ -31,7 +31,13 @@ class FakeService : RunInfoIOBoundary {
         }
 
     override fun getRunByTime(time: Long): Flow<Run> {
-        return flow {}
+        return flow {
+            emit(
+                Run(
+                    0.0, 0, 0L, 0.0, 0.0
+                )
+            )
+        }
     }
 
     override suspend fun deleteRunById(runId: Int) {

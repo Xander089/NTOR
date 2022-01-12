@@ -14,14 +14,23 @@ interface ApplicationDao {
     @Query("SELECT id FROM RunRoomEntity ORDER BY id DESC LIMIT 1")
     fun getLatestId(): Flow<Int>
 
+    @Query("SELECT id FROM RunRoomEntity ORDER BY id DESC LIMIT 1")
+    suspend fun getLastId(): Int
+
+    @Query("SELECT id FROM RunRoomEntity WHERE date = :date")
+    suspend fun getRunIdByDate(date: Long): Int
+
+    @Query("SELECT id FROM RunRoomEntity WHERE date = :date")
+    fun getRunIdByDateAsFlow(date: Long): Flow<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRun(run: RunRoomEntity)
 
     @Query("SELECT * FROM RunRoomEntity")
     fun getRunsAsFlow(): Flow<List<RunRoomEntity>>
 
-    @Query("SELECT * FROM RunRoomEntity WHERE time = :time")
-    fun getRunByTime(time: Long): Flow<RunRoomEntity>
+    @Query("SELECT * FROM RunRoomEntity WHERE date = :date")
+    fun getRunByTime(date: Long): Flow<RunRoomEntity>
 
     @Query("SELECT * FROM RunRoomEntity ORDER BY id LIMIT 1")
     fun getLatestRun(): Flow<RunRoomEntity>
@@ -31,6 +40,9 @@ interface ApplicationDao {
 
     @Query("DELETE FROM RunRoomEntity WHERE id = :runId")
     suspend fun deleteRunById(runId: Int)
+
+    @Query("DELETE FROM RunRoomEntity WHERE date = :date")
+    suspend fun deleteRunByDate(date: Long)
 
     //POINTS
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -57,6 +69,6 @@ interface ApplicationDao {
     suspend fun deleteTempPoints()
 
     @Query("SELECT * FROM CurrentRunPointsRoomEntity")
-     fun getTempPoints(): Flow<List<CurrentRunPointsRoomEntity>>
+    fun getTempPoints(): Flow<List<CurrentRunPointsRoomEntity>>
 
 }

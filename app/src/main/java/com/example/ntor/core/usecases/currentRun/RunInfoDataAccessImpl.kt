@@ -14,7 +14,8 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
 
-class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao) : RunInfoDataAccessInterface {
+class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao) :
+    RunInfoDataAccessInterface {
 
 
     //RUN
@@ -25,7 +26,11 @@ class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao)
         pacing: Double,
         calories: Double
     ) =
-        dao.insertRun(RunRoomEntity(distance, time, date,pacing,calories))
+        dao.insertRun(RunRoomEntity(distance, time, date, pacing, calories))
+
+    override suspend fun getRunIdByDate(date: Long): Int = dao.getRunIdByDate(date)
+    override fun getRunIdByDateAsFlow(date: Long): Flow<Int> = dao.getRunIdByDateAsFlow(date)
+    override suspend fun getLastId(): Int = dao.getLastId()
 
     override fun getLatestRun(): Flow<Run> = dao.getLatestRun().map { it.toRun() }
     override fun getLatestRunId(): Flow<Int> = dao.getLatestId()
@@ -38,6 +43,9 @@ class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao)
 
     override fun getRunByTime(time: Long): Flow<Run> = dao.getRunByTime(time).map { it.toRun() }
     override suspend fun deleteRunById(runId: Int) = dao.deleteRunById(runId)
+    override suspend fun deleteRunByDate(date: Long) {
+        dao.deleteRunByDate(date)
+    }
 
     //POINT
     override suspend fun getPointByTime(time: Long): Point = dao.getPointByTime(time).toPoint()

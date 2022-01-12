@@ -16,7 +16,10 @@ interface RunInfoIOBoundary {
     //RUN
     fun getLatestRun(): Flow<Run>
     fun getLatestRunId(): Flow<Int>
+    suspend fun getLastId(): Int
 
+    suspend fun getRunIdByDate(date: Long): Int
+    fun getRunIdByDateAsFlow(date: Long): Flow<Int>
     suspend fun insertRun(
         distance: Double,
         time: Int,
@@ -28,6 +31,8 @@ interface RunInfoIOBoundary {
     fun getRunsAsFlow(): Flow<List<Run>>
     fun getRunByTime(time: Long): Flow<Run>
     suspend fun deleteRunById(runId: Int)
+    suspend fun deleteRunByDate(date: Long)
+
 
     //POINT
     suspend fun getPointByTime(time: Long): Point

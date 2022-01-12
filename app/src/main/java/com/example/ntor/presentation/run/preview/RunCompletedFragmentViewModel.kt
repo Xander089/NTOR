@@ -1,5 +1,6 @@
 package com.example.ntor.presentation.run.preview
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
@@ -19,15 +20,21 @@ class RunCompletedFragmentViewModel @Inject constructor(
 
 
     var points: LiveData<List<Point>> = MutableLiveData()
-    private val latestRunId = boundary.getLatestRunId().asLiveData()
 
     fun setupRoute() {
         points = boundary.getTempPoints().asLiveData()
     }
 
+    fun formatDistance(distance: Double) = DataHelper.formatNumber(distance/1000.0)
+    fun formatPacing(pacing: Double) = DataHelper.toMinutes(pacing)
+    fun formatCalories(calories: Double) = DataHelper.formatDouble(calories)
+    fun formatTime(seconds: Int) = DataHelper.toTime(seconds)
+    fun formatDate(date: Long) = DataHelper.formatDate(date)
+
     fun createRun(
         parcel: RunParcelable
     ) = viewModelScope.launch(Dispatchers.IO) {
+
         boundary.insertRun(
             parcel.distance,
             parcel.time,
@@ -35,13 +42,13 @@ class RunCompletedFragmentViewModel @Inject constructor(
             parcel.pacing,
             parcel.calories
         )
-        insertPoints()
+
+        insertPoints(boundary.getLastId())
     }
 
-    private suspend fun insertPoints() {
-        val id = latestRunId.value ?: 0
+    private suspend fun insertPoints(runId: Int) {
         points.value?.forEach {
-            boundary.insertPoint(id,it.latitude,it.longitude)
+            boundary.insertPoint(runId,it.latitude,it.longitude)
         }
     }
 

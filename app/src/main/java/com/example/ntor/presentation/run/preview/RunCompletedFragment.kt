@@ -15,12 +15,13 @@ import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.NavigationManager
 import com.example.ntor.presentation.RunParcelable
 import com.example.ntor.presentation.camera.CameraActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_run.*
 import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class RunCompletedFragment : Fragment() {
 
     companion object {
@@ -86,11 +87,11 @@ class RunCompletedFragment : Fragment() {
     private fun populateTextViews() {
         getRunParcel().let { runParcel ->
             binding.apply {
-                distanceText.text = runParcel?.distance.toString()
-                runDurationText.text = runParcel?.time.toString()
-                startTimeText.text = runParcel?.date.toString()
-                pacingText.text = runParcel?.pacing.toString()
-                caloriesText.text = runParcel?.calories.toString()
+                distanceText.text = viewModel.formatDistance(runParcel?.distance ?: 0.0)
+                runDurationText.text = viewModel.formatTime(runParcel?.time ?: 0)
+                startTimeText.text = viewModel.formatDate(runParcel?.date ?: 0L)
+                pacingText.text = viewModel.formatPacing(runParcel?.pacing ?: 0.0)
+                caloriesText.text = viewModel.formatCalories(runParcel?.calories ?: 0.0)
             }
         }
     }

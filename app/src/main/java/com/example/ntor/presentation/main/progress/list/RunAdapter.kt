@@ -8,16 +8,12 @@ import com.example.ntor.databinding.ItemRunBinding
 import com.example.ntor.presentation.DataHelper
 import java.util.*
 
-fun main(){
-    val dateSplit = Date(Date().time).toString().split(" ")
-   println(dateSplit)
-}
-
 
 class RunAdapter(
     private val runs: MutableList<Run> = mutableListOf(),
     private val openDetail: (Long) -> Unit = {},
-) : RecyclerView.Adapter<RunAdapter.RunListViewHolder>() {
+    val onSwipe : (Long) -> Unit = {}
+) : RecyclerView.Adapter<RunAdapter.RunListViewHolder>(), ItemTouchHelperAdapter {
 
 
     fun updateRuns(_runs: List<Run>) {
@@ -40,10 +36,13 @@ class RunAdapter(
                 root.setOnClickListener {
                     openDetail(run.date)
                 }
-                distanceTextView.text = DataHelper.formatNumber(run.distance)
+                distanceTextView.text = DataHelper.formatNumber(toKm(run.distance))
                 dateTextView.text = DataHelper.formatDate(run.date)
             }
         }
+
+        private fun toKm(distance: Double) = DataHelper.metresToKm(distance)
+
 
     }
 
@@ -58,4 +57,10 @@ class RunAdapter(
     }
 
     override fun getItemCount(): Int = runs.size
+
+    override fun onItemDismiss(position: Int) {
+        onSwipe(runs[position].date)
+        runs.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

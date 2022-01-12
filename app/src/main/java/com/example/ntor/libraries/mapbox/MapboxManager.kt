@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.ntor.R
@@ -55,6 +56,11 @@ class MapboxManager(
     }
 
     fun onRouteReady(context: Context, points: List<Point>) {
+        Log.v("aaa3__",points.toString())
+        if(points.isEmpty()){
+            return
+        }
+
         val route = points.map { toMabBoxPoint(it) }
         val center = getMapCenter(route)
         mapView.getMapboxMap().setCamera(

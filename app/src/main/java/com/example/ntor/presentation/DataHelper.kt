@@ -22,7 +22,7 @@ object DataHelper {
     private const val AVG_WEIGHT_KG = 70.0
     private const val AVG_CONSUMPTION_PER_KM = AVG_WEIGHT_KG / LB_KG * FACTOR / MILES_KM
 
-    private val monthMap = mapOf<String,String>(
+    private val monthMap = mapOf<String, String>(
         "Jan" to "01",
         "Feb" to "02",
         "Mar" to "03",
@@ -37,14 +37,14 @@ object DataHelper {
         "Dec" to "12",
     )
 
-    fun formatNumber(number: Double): String{
+    fun formatNumber(number: Double): String {
         val numString = number.toString()
         val pointPosition = numString.indexOf(".")
-        val formatted = numString.substring(0,pointPosition+2)
+        val formatted = numString.substring(0, pointPosition + 2)
         return "$formatted km"
     }
 
-    fun formatDate(time: Long) : String{
+    fun formatDate(time: Long): String {
         val split = Date(time).toString().split(" ")
         return "${monthMap[split[1]]}/${split[2]}/${split[5]}"
     }
@@ -141,5 +141,12 @@ object DataHelper {
 
         return "$minutes:$remainingSeconds"
     }
+
+    fun toHours(seconds: Int): String {
+        val hours = seconds / 3600.0
+        return formatDouble(hours)
+    }
+
+    fun metresToKm(distance: Double) = distance / 1000.0
 
 }

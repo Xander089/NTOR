@@ -19,11 +19,11 @@ class RunParcelable(
     )
 
     override fun describeContents(): Int {
-        TODO("Not yet implemented")
+        return 0
     }
 
     override fun writeToParcel(p0: Parcel?, p1: Int) {
-        TODO("Not yet implemented")
+
     }
 
     companion object CREATOR : Parcelable.Creator<RunParcelable> {
