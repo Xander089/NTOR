@@ -34,7 +34,7 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
     companion object {
         private const val ACTION_RUN_TO_COMPLETED = R.id.action_runFragment_to_runCompletedFragment
         private const val PAUSE = "PAUSE"
-        private const val PLAY = "PLAY"
+        private const val PLAY = "START"
     }
 
 
@@ -148,7 +148,7 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
             viewModel.stopTimer()
             viewModel.setTimerState(TimerState.OFF)
             button.text = PLAY
-            button.setBackgroundColor(requireActivity().resources.getColor(R.color.green, null))
+            button.setBackgroundColor(requireActivity().resources.getColor(R.color.preview_fab, null))
         } else {
             viewModel.startTimer(getTimerText())
             viewModel.setTimerState(TimerState.ON)

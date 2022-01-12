@@ -3,10 +3,12 @@ package com.example.ntor.libraries.hilt
 import android.content.Context
 import androidx.room.Room
 import com.example.ntor.core.usecases.currentRun.RunInfoDataAccessImpl
+import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
 import com.example.ntor.core.usecases.currentRun.RunInfoInteractor
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.libraries.room.ApplicationDatabase
 import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.main.progress.detail.RunDetailFragmentViewModel
 import com.example.ntor.presentation.run.countdown.CountDownAudioPlayer
 import com.example.ntor.presentation.run.countdown.CountDownVIewModel
 import dagger.Module
@@ -47,5 +49,8 @@ object ApplicationModule {
 
     @Provides
     fun provideMapboxManager() = MapboxManager()
+
+    @Provides
+    fun provideDetailViewModel(boundary: RunInfoIOBoundary) = RunDetailFragmentViewModel(boundary)
 
 }

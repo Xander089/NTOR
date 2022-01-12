@@ -13,12 +13,12 @@
 
 
     <color name="gold">#E7B82A</color>
-    <color name="green">#1BD359</color>
+    <color name="green">#26B391</color>
     <color name="orange">#FFB22C</color>
     <color name="red">#C8230D</color>
 
     <color name="countdown_gray_status_bar">#FFF5F5F5</color>
-    <color name="detail_bkg">#F5F5F5</color>
+    <color name="detail_bkg">#A8A8B6</color>
     <color name="countdown_gray_icon_nav_bar">#FF9C9C9C</color>
     <color name="text_timer">#363739</color>
     <color name="text_main">#222222</color>

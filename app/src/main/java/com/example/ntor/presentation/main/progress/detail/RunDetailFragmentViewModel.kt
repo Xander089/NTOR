@@ -13,9 +13,9 @@ import javax.inject.Inject
 class RunDetailFragmentViewModel @Inject constructor(private val boundary: RunInfoIOBoundary) :
     ViewModel() {
 
-    var run: LiveData<Run> = MutableLiveData()
-    var points: LiveData<List<Point>> = MutableLiveData(emptyList())
-    lateinit var runId : LiveData<Int>
+    var run: LiveData<Run>? = MutableLiveData()
+    var points: LiveData<List<Point>>? = MutableLiveData(emptyList())
+    var runId : LiveData<Int>? = null
 
     fun setupDetailRun(time: Long) {
         run = boundary.getRunByTime(time).asLiveData()
@@ -25,6 +25,12 @@ class RunDetailFragmentViewModel @Inject constructor(private val boundary: RunIn
     fun setRoute(id: Int){
         Log.v("aaa8",id.toString())
         points = boundary.getPointsByIdAsFlow(id).asLiveData()
+    }
+
+    fun releaseLiveData(){
+        run = null
+        runId = null
+        points = null
     }
 
     fun formatDistance(distance: Double) = DataHelper.formatNumber(distance/1000.0)

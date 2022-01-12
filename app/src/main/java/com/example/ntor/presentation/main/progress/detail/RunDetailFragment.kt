@@ -26,7 +26,8 @@ class RunDetailFragment : Fragment() {
     @Inject
     lateinit var mapboxManager: MapboxManager
 
-    private val viewModel: RunDetailFragmentViewModel by activityViewModels()
+    @Inject
+    lateinit var viewModel: RunDetailFragmentViewModel //by activityViewModels()
     private lateinit var binding: FragmentRunDetailBinding
 
     override fun onCreateView(
@@ -44,8 +45,13 @@ class RunDetailFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStop() {
+        super.onStop()
+        viewModel.releaseLiveData()
+    }
+
     private fun initObservers() {
-        viewModel.run.observe(requireActivity(), { run ->
+        viewModel.run?.observe(requireActivity(), { run ->
             binding.apply {
                 distanceText.text = viewModel.formatDistance(run.distance)
                 avgPacingText.text = viewModel.formatPacing(run.pacing)
@@ -54,11 +60,14 @@ class RunDetailFragment : Fragment() {
             }
         })
 
-        viewModel.runId.observe(requireActivity(),{ runId ->
-            viewModel.setRoute(runId)
+        viewModel.runId?.observe(requireActivity(),{ runId ->
+            runId?.let {
+                viewModel.setRoute(runId)    
+            }
+            
         })
 
-        viewModel.points.observe(requireActivity(), { points ->
+        viewModel.points?.observe(requireActivity(), { points ->
                 mapboxManager.onRouteReady(requireContext(), points)
         })
 
