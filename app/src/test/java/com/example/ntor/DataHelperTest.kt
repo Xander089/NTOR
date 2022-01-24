@@ -1,9 +1,5 @@
 package com.example.ntor
 
-import com.example.ntor.presentation.DataHelper
-import org.junit.Assert
-import org.junit.Test
-
 class DataHelperTest {
 
 //    private val dataHelper = DataHelper()

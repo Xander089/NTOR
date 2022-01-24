@@ -7,10 +7,9 @@ import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
 import com.example.ntor.core.usecases.currentRun.RunInfoInteractor
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.libraries.room.ApplicationDatabase
-import com.example.ntor.presentation.DataHelper
 import com.example.ntor.presentation.main.progress.detail.RunDetailFragmentViewModel
 import com.example.ntor.presentation.run.countdown.CountDownAudioPlayer
-import com.example.ntor.presentation.run.countdown.CountDownVIewModel
+import com.example.ntor.presentation.run.countdown.CountDownViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +40,7 @@ object ApplicationModule {
         RunInfoInteractor(dataAccessImpl)
 
     @Provides
-    fun provideCountDownViewModel() = CountDownVIewModel()
+    fun provideCountDownViewModel() = CountDownViewModel()
 
     @Singleton
     @Provides
@@ -52,5 +51,7 @@ object ApplicationModule {
 
     @Provides
     fun provideDetailViewModel(boundary: RunInfoIOBoundary) = RunDetailFragmentViewModel(boundary)
+
+
 
 }

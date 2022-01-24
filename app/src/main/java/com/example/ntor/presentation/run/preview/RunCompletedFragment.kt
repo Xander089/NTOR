@@ -6,27 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.ntor.R
 import com.example.ntor.databinding.FragmentRunCompletedBinding
-import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
-import com.example.ntor.presentation.NavigationManager
-import com.example.ntor.presentation.RunParcelable
+import com.example.ntor.presentation.utils.RunParcelable
 import com.example.ntor.presentation.camera.CameraActivity
+import com.example.ntor.presentation.utils.Constants.PARCEL
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_run.*
-import java.lang.ref.WeakReference
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RunCompletedFragment : Fragment() {
 
-    companion object {
-        const val PARCEL = "parcel"
-    }
 
     private lateinit var binding: FragmentRunCompletedBinding
 

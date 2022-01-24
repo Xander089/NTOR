@@ -1,6 +1,6 @@
 package com.example.ntor.viewmodels
 
-import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.utils.DataHelper
 import com.example.ntor.presentation.run.preview.RunCompletedFragmentViewModel
 import org.junit.Before
 import org.junit.Test

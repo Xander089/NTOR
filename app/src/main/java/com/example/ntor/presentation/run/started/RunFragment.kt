@@ -1,14 +1,11 @@
 package com.example.ntor.presentation.run.started
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.TriggerEvent
 import android.hardware.TriggerEventListener
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,11 +18,9 @@ import com.example.ntor.R
 import com.example.ntor.databinding.FragmentRunBinding
 import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
-import com.example.ntor.presentation.NavigationManager
-import com.example.ntor.presentation.RunParcelable
+import com.example.ntor.presentation.utils.NavigationManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint

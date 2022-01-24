@@ -37,6 +37,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun checkPermissions(){
+
+    }
+
     private fun initLayout() {
         binding.startRunButton.setOnClickListener {
             val intent = RunActivity.newIntent(requireContext())

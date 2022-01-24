@@ -5,7 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.ntor.core.entities.Run
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
-import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.utils.DataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

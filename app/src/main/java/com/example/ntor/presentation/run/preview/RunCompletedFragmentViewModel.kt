@@ -1,14 +1,13 @@
 package com.example.ntor.presentation.run.preview
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
-import com.example.ntor.presentation.DataHelper
-import com.example.ntor.presentation.RunParcelable
+import com.example.ntor.presentation.utils.Constants.M_TO_KM
+import com.example.ntor.presentation.utils.DataHelper
+import com.example.ntor.presentation.utils.RunParcelable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,14 +17,13 @@ class RunCompletedFragmentViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-
     var points: LiveData<List<Point>> = MutableLiveData()
 
     fun setupRoute() {
         points = boundary.getTempPoints().asLiveData()
     }
 
-    fun formatDistance(distance: Double) = DataHelper.formatNumber(distance/1000.0)
+    fun formatDistance(distance: Double) = DataHelper.formatNumber(distance/M_TO_KM)
     fun formatPacing(pacing: Double) = DataHelper.toMinutes(pacing)
     fun formatCalories(calories: Double) = DataHelper.formatDouble(calories)
     fun formatTime(seconds: Int) = DataHelper.toTime(seconds)

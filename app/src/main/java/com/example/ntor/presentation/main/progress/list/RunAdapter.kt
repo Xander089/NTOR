@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ntor.core.entities.Run
 import com.example.ntor.databinding.ItemRunBinding
-import com.example.ntor.presentation.DataHelper
-import java.util.*
+import com.example.ntor.presentation.utils.DataHelper
 
 
 class RunAdapter(

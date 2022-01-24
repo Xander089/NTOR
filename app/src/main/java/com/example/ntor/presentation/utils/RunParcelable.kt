@@ -1,4 +1,4 @@
-package com.example.ntor.presentation
+package com.example.ntor.presentation.utils
 
 import android.os.Parcel
 import android.os.Parcelable

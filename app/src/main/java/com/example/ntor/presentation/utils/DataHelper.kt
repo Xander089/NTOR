@@ -1,4 +1,4 @@
-package com.example.ntor.presentation
+package com.example.ntor.presentation.utils
 
 import com.example.ntor.core.entities.Point
 import kotlinx.coroutines.delay
@@ -60,6 +60,16 @@ object DataHelper {
             }
         }
 
+    fun provideCountDownTimerDesc(time: Int) =
+        flow {
+            var currentTime = time
+            while (currentTime > 0) {
+                delay(Constants.DEFAULT_DELAY_TIME)
+                currentTime--
+                emit(currentTime)
+            }
+        }
+
 
     fun formatDouble(number: Double): String {
         val numToString = number.toString()
@@ -111,9 +121,9 @@ object DataHelper {
         val minutes = remainderSeconds / 60
         remainderSeconds %= 60
 
-        val h = if (hour < 10) "${ZERO}$hour" else "$hour"
-        val m = if (minutes < 10) "${ZERO}$minutes" else "$minutes"
-        val s = if (remainderSeconds < 10) "${ZERO}$remainderSeconds" else "$remainderSeconds"
+        val h = if (hour < 10) "$ZERO$hour" else "$hour"
+        val m = if (minutes < 10) "$ZERO$minutes" else "$minutes"
+        val s = if (remainderSeconds < 10) "$ZERO$remainderSeconds" else "$remainderSeconds"
 
         return "$h:$m:$s"
     }

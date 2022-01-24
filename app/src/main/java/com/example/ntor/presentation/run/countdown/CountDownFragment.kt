@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.ntor.R
 import com.example.ntor.databinding.FragmentCountDownBinding
-import com.example.ntor.databinding.FragmentRunBinding
-import com.example.ntor.presentation.NavigationManager
+import com.example.ntor.presentation.utils.Constants.STANDARD_SECONDS
+import com.example.ntor.presentation.utils.NavigationManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class CountDownFragment : Fragment() {
     }
 
     @Inject
-    lateinit var viewModel: CountDownVIewModel
+    lateinit var viewModel: CountDownViewModel
 
     @Inject
     lateinit var player: CountDownAudioPlayer
@@ -48,19 +48,18 @@ class CountDownFragment : Fragment() {
     private fun initLayout() {
         binding.apply {
             startNowTextView.setOnClickListener {
-                viewModel.stopTimer()
+                viewModel.disposeTimer()
                 player.release()
                 NavigationManager.navigateTo(findNavController(), ACTION)
             }
             addSecondsButton.setOnClickListener {
                 viewModel.addSeconds(
-                    10,
+                    STANDARD_SECONDS,
                     countDownTextView.text.toString()
                 )
             }
 
         }
-
 
     }
 
@@ -73,6 +72,7 @@ class CountDownFragment : Fragment() {
 
     private fun navigateToRunFragment(time: Int) {
         if (time == 0) {
+            viewModel.disposeTimer()
             NavigationManager.navigateTo(findNavController(), ACTION)
         }
     }
@@ -84,6 +84,7 @@ class CountDownFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+        viewModel.disposeTimer()
         player.release()
     }
 

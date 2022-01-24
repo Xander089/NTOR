@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.entities.Run
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
-import com.example.ntor.presentation.DataHelper
+import com.example.ntor.presentation.utils.DataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,28 +1,22 @@
 package com.example.ntor.presentation.run.started
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
-import com.example.ntor.presentation.DataHelper
-import com.example.ntor.presentation.RunParcelable
-import com.example.ntor.presentation.run.countdown.CountDownVIewModel
+import com.example.ntor.presentation.utils.Constants.FOUR_SECONDS
+import com.example.ntor.presentation.utils.Constants.MAX_TIME
+import com.example.ntor.presentation.utils.Constants.RESET_TIME
+import com.example.ntor.presentation.utils.DataHelper
+import com.example.ntor.presentation.utils.RunParcelable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 @HiltViewModel
 class RunFragmentViewModel @Inject constructor(
@@ -30,11 +24,6 @@ class RunFragmentViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    companion object {
-        private const val FOUR_SECONDS = 4000
-        private const val MAX_TIME = 7200
-        private const val RESET_TIME = "00:00:00"
-    }
 
     fun formatDouble(number: Double) = DataHelper.formatDouble(number)
     fun toMinutes(minutes: Double) = DataHelper.toMinutes(minutes)
