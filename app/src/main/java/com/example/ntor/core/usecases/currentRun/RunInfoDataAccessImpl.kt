@@ -1,8 +1,10 @@
 package com.example.ntor.core.usecases.currentRun
 
+import android.util.Log
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.entities.Run
 import com.example.ntor.core.usecases.EntityMapper.toPoint
+import com.example.ntor.core.usecases.EntityMapper.toPointRoomEntity
 import com.example.ntor.core.usecases.EntityMapper.toRun
 import com.example.ntor.libraries.room.ApplicationDao
 import com.example.ntor.libraries.room.CurrentRunPointsRoomEntity
@@ -53,7 +55,9 @@ class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao)
         dao.getPointsById(runId).map { it.toPoint() }
 
     override fun getPointsByIdAsFlow(runId: Int): Flow<List<Point>> =
-        dao.getPointsByIdAsFlow(runId).map { list -> list.map { it.toPoint() } }
+        dao.getPointsByIdAsFlow(runId).map {
+            it.map { point -> point.toPoint() }
+        }
 
     override suspend fun deletePointsById(runId: Int) = dao.deletePointsById(runId)
     override suspend fun insertPoint(runId: Int, latitude: Double, longitude: Double) =
@@ -65,6 +69,11 @@ class RunInfoDataAccessImpl @Inject constructor(private val dao: ApplicationDao)
                 Date().time
             )
         )
+
+    override suspend fun insertPoints(runId: Int, points: List<Point>) {
+        val pointsEntities = points.map { it.toPointRoomEntity(runId) }
+        dao.insertPoints(pointsEntities)
+    }
 
     //TEMP POINT
     override fun getTempPoints(): Flow<List<Point>> =

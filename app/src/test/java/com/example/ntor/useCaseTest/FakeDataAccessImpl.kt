@@ -16,6 +16,18 @@ class FakeDataAccessImpl : RunInfoDataAccessInterface {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getRunIdByDate(date: Long): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getRunIdByDateAsFlow(date: Long): Flow<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getLastId(): Int {
+        TODO("Not yet implemented")
+    }
+
     override fun getLatestRun(): Flow<Run> {
         TODO("Not yet implemented")
     }
@@ -33,6 +45,10 @@ class FakeDataAccessImpl : RunInfoDataAccessInterface {
     }
 
     override suspend fun deleteRunById(runId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteRunByDate(date: Long) {
         TODO("Not yet implemented")
     }
 

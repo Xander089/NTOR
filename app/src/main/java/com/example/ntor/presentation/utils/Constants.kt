@@ -8,5 +8,9 @@ object Constants {
     const val RESET_TIME = "00:00:00"
     const val PARCEL = "parcel"
     const val STANDARD_SECONDS = 10
+    const val PAUSE = "PAUSE"
+    const val PLAY = "START"
+    const val PARCEL_TAG = "parcel"
+
 
 }

@@ -56,7 +56,6 @@ class MapboxManager(
     }
 
     fun onRouteReady(context: Context, points: List<Point>) {
-        Log.v("aaa3__",points.toString())
         if(points.isEmpty()){
             return
         }

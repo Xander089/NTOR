@@ -26,7 +26,13 @@ class RunFragmentViewModel @Inject constructor(
 
 
     fun formatDouble(number: Double) = DataHelper.formatDouble(number)
-    fun toMinutes(minutes: Double) = DataHelper.toMinutes(minutes)
+    fun toMinutes(minutes: Double, previous: String): String {
+        return when {
+            minutes > 50 -> previous
+            else -> DataHelper.toMinutes(minutes)
+        }
+    }
+
     fun toTime(seconds: Int) = DataHelper.toTime(seconds)
 
     private var countDownTimer: Flow<Int> = DataHelper.provideCountDownTimer(0, MAX_TIME)
@@ -53,7 +59,7 @@ class RunFragmentViewModel @Inject constructor(
         userMotionState = state
     }
 
-    fun buildRunParcelable() : RunParcelable {
+    fun buildRunParcelable(): RunParcelable {
         val distance: Double = _distance.value ?: 0.0
         val time: Int = DataHelper.toSeconds(_timerText.value.orEmpty())
         val date: Long = Date().time
@@ -63,12 +69,13 @@ class RunFragmentViewModel @Inject constructor(
         return RunParcelable(distance, time, date, pacing, calories)
     }
 
-    private fun isUserMoving() = userMotionState == UserMotion.MOVING
 
     private var timerState = TimerState.ON
     fun setTimerState(state: TimerState) {
         timerState = state
     }
+
+    fun getTimerState() = timerState
 
     private fun isTimerStateOn() = timerState == TimerState.ON
 

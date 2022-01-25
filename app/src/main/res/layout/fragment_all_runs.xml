@@ -5,7 +5,7 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/detail_bkg"
+    android:background="@color/white"
     tools:context=".presentation.main.progress.detail.RunDetailFragment">
 
 

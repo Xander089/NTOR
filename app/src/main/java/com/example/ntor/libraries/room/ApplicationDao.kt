@@ -48,6 +48,9 @@ interface ApplicationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPoint(point: PointRoomEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPoints(points: List<PointRoomEntity>)
+
     @Query("SELECT * FROM PointRoomEntity WHERE time = :time")
     suspend fun getPointByTime(time: Long): PointRoomEntity
 

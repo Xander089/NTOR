@@ -38,6 +38,11 @@ class RunCompletedFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mapboxManager.onCameraTrackingDismissed()
+    }
+
     private fun initObservers() {
         viewModel.points.observe(requireActivity(), { points ->
             mapboxManager.onRouteReady(requireContext(), points)
@@ -52,19 +57,17 @@ class RunCompletedFragment : Fragment() {
 
             saveRunButton.setOnClickListener {
                 createRun()
-                finishRunActivity()
+                requireActivity().finish()
             }
 
             closeButton.setOnClickListener {
-                finishRunActivity()
+                requireActivity().finish()
             }
 
             populateTextViews()
 
         }
     }
-
-    private fun finishRunActivity() = requireActivity().finish()
 
     private fun createRun() =
         getRunParcel()?.let {
@@ -84,11 +87,6 @@ class RunCompletedFragment : Fragment() {
                 caloriesText.text = viewModel.formatCalories(runParcel?.calories ?: 0.0)
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapboxManager.onCameraTrackingDismissed()
     }
 
 }

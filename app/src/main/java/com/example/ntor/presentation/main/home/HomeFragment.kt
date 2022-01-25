@@ -18,9 +18,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-
     private lateinit var binding: FragmentHomeBinding
-
 
     @Inject
     lateinit var mapboxManager: MapboxManager

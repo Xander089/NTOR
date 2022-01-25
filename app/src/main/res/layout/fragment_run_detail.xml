@@ -5,7 +5,7 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/detail_bkg"
+    android:background="@color/white"
     app:layout_constraintGuide_percent="0.33"
     tools:context=".presentation.main.progress.detail.RunDetailFragment">
 
@@ -25,13 +25,15 @@
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/icon_green"
+        android:background="@color/white"
         android:theme="@style/AppTheme.Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back"
-        app:title="Run" />
+        app:navigationIconTint="@color/black"
+        app:title="Run"
+        app:titleTextColor="@color/black" />
 
 
     <com.google.android.material.card.MaterialCardView

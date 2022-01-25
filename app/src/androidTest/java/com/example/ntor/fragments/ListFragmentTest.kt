@@ -1,9 +1,10 @@
-package com.example.ntor
+package com.example.ntor.fragments
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.ntor.R
 import com.example.ntor.presentation.main.progress.detail.RunDetailFragment
 import org.junit.After
 import org.junit.Before
@@ -12,7 +13,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class AnotherTest {
+class ListFragmentTest {
 
 private lateinit var scenario : FragmentScenario<RunDetailFragment>
 

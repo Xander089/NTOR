@@ -62,13 +62,14 @@ class RunDetailFragment : Fragment() {
 
         viewModel.runId?.observe(requireActivity(),{ runId ->
             runId?.let {
-                viewModel.setRoute(runId)    
+                viewModel.setRoute(runId)
             }
             
         })
 
-        viewModel.points?.observe(requireActivity(), { points ->
-                mapboxManager.onRouteReady(requireContext(), points)
+        viewModel.points.observe(requireActivity(), { points ->
+            Log.v("daaaa",points.toString())
+            mapboxManager.onRouteReady(requireContext(), points)
         })
 
     }

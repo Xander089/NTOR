@@ -1,9 +1,8 @@
-package com.example.ntor
+package com.example.ntor.database
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.filters.SmallTest
-import com.example.ntor.core.usecases.currentRun.RunInfoDataAccessImpl
 import com.example.ntor.libraries.hilt.ApplicationModule
 import com.example.ntor.libraries.room.ApplicationDao
 import com.example.ntor.libraries.room.ApplicationDatabase

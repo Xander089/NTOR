@@ -1,48 +1,34 @@
 package com.example.ntor.presentation.run.started
 
-import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorManager
-import android.hardware.TriggerEvent
-import android.hardware.TriggerEventListener
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ntor.R
 import com.example.ntor.databinding.FragmentRunBinding
 import com.example.ntor.libraries.mapbox.MapboxManager
+import com.example.ntor.presentation.utils.Constants.PARCEL_TAG
+import com.example.ntor.presentation.utils.Constants.PAUSE
+import com.example.ntor.presentation.utils.Constants.PLAY
 import com.example.ntor.presentation.utils.NavigationManager
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RunFragment : Fragment(), StopRunDialog.DialogListener {
+class RunFragment : Fragment() {
 
     companion object {
         private const val ACTION_RUN_TO_COMPLETED = R.id.action_runFragment_to_runCompletedFragment
-        private const val PAUSE = "PAUSE"
-        private const val PLAY = "START"
-    }
-
-
-    //Significant Motion sensor: triggered to detect when user is moving
-    private lateinit var sensorManager: SensorManager
-    private var significantMotionSensor: Sensor? = null
-    private val triggerEventListener = object : TriggerEventListener() {
-        override fun onTrigger(event: TriggerEvent?) {
-            viewModel.setUserMotionState(UserMotion.MOVING)
-        }
     }
 
     @Inject
-    lateinit var mapboxManager : MapboxManager
+    lateinit var mapboxManager: MapboxManager
     private lateinit var binding: FragmentRunBinding
     private val viewModel: RunFragmentViewModel by activityViewModels()
 
@@ -54,26 +40,30 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
         binding = FragmentRunBinding.inflate(inflater, container, false)
 
         setupMapBox()
-        initMotionSensor()
         initLayout()
         initObservers()
 
         return binding.root
     }
 
-    private fun setupMapBox(){
-        mapboxManager.setMapBoxHandlePosition{ latitude, longitude ->
-            viewModel.insertNewPosition(latitude, longitude)
-        }
-        mapboxManager.setMapView(binding.mapView)
-        mapboxManager.onMapReady(requireContext())
+    override fun onDestroy() {
+        super.onDestroy()
+        mapboxManager.onCameraTrackingDismissed()
     }
 
-    private fun initMotionSensor() {
-        sensorManager =
-            requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        significantMotionSensor = sensorManager.getDefaultSensor(Sensor.TYPE_SIGNIFICANT_MOTION)
+    private fun setupMapBox() {
+        mapboxManager.apply {
+            setMapView(binding.mapView)
+
+            //when new position is available -> temporarily cache it
+            setMapBoxHandlePosition { latitude, longitude ->
+                Log.v("eaaaa", latitude.toString())
+                viewModel.insertNewPosition(latitude, longitude)
+            }
+            onMapReady(requireContext()) //shows the map
+        }
     }
+
 
     private fun initLayout() {
         binding.apply {
@@ -84,30 +74,18 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
             stopRunButton.setOnClickListener {
                 viewModel.stopTimer()
                 viewModel.setTimerState(TimerState.OFF)
-                //showStopRunDialog()
                 NavigationManager.navigateTo(
                     findNavController(),
                     ACTION_RUN_TO_COMPLETED,
-                    bundleOf("parcel" to viewModel.buildRunParcelable())
+                    bundleOf(PARCEL_TAG to viewModel.buildRunParcelable())
                 )
 
             }
             pauseRunButton.setOnClickListener {
-                handlePauseButton(pauseRunButton)
+                handlePauseButton(viewModel.getTimerState())
             }
         }
     }
-
-    private fun showStopRunDialog() {
-        StopRunDialog(
-            getResourceString(R.string.stop_run_dialog_message),
-            getResourceString(R.string.ok),
-            getResourceString(R.string.cancel)
-        )
-            .show(parentFragmentManager, "TAG")
-    }
-
-    private fun getResourceString(id: Int) = requireActivity().resources.getString(id)
 
     private fun initObservers() {
         viewModel.timerText.observe(this, { time ->
@@ -128,69 +106,46 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
             binding.caloriesTextView.text = viewModel.formatDouble(calories)
         })
         viewModel.pacing.observe(this, { pacing ->
-            binding.rythmTextView.text = viewModel.toMinutes(pacing)
+            val view = binding.rythmTextView
+            view.text = viewModel.toMinutes(
+                pacing,
+                view.text.toString()
+            )
         })
     }
 
-    private fun handlePauseButton(button: Button) {
-
-        val buttonText = button.text.toString()
-
-        if (buttonText == PAUSE) {
-            viewModel.stopTimer()
-            viewModel.setTimerState(TimerState.OFF)
-            button.text = PLAY
-            button.setBackgroundColor(requireActivity().resources.getColor(R.color.preview_fab, null))
-        } else {
-            viewModel.startTimer(getTimerText())
-            viewModel.setTimerState(TimerState.ON)
-            button.text = PAUSE
-            button.setBackgroundColor(requireActivity().resources.getColor(R.color.orange, null))
-        }
-
-    }
-
-    private fun getTimerText() = binding.timerTextView.text.toString()
-
     private fun toggleButtonVisibility(button: Button) {
-        if (button.visibility == View.VISIBLE) {
-            button.visibility = View.INVISIBLE
-        } else {
-            button.visibility = View.VISIBLE
+        button.visibility = when (button.visibility) {
+            View.VISIBLE -> View.INVISIBLE
+            View.INVISIBLE -> View.VISIBLE
+            else -> View.VISIBLE
         }
     }
 
-
-    //LIFE CYCLE CALLBACKS
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapboxManager.onCameraTrackingDismissed()
-    }
-
-
-
-    override fun onResume() {
-        super.onResume()
-        significantMotionSensor?.let { sensor ->
-            sensorManager.requestTriggerSensor(triggerEventListener, sensor)
+    private fun handlePauseButton(state: TimerState) {
+        when (state) {
+            TimerState.ON -> pause()
+            TimerState.OFF -> restart()
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        significantMotionSensor?.let { sensor ->
-            sensorManager.cancelTriggerSensor(triggerEventListener, sensor)
-        }
+    private fun pause() {
+        viewModel.stopTimer()
+        viewModel.setTimerState(TimerState.OFF)
+        binding.pauseRunButton.text = PLAY
+        binding.pauseRunButton.setBackgroundColor(getColor(R.color.preview_fab))
     }
 
-
-    override fun onDialogPositiveClick() {
-
+    private fun restart() {
+        viewModel.startTimer(getTimerText())
+        viewModel.setTimerState(TimerState.ON)
+        binding.pauseRunButton.text = PAUSE
+        binding.pauseRunButton.setBackgroundColor(getColor(R.color.orange))
     }
 
-    override fun onDialogNegativeClick() {
-    }
-
+    private fun showStopRunDialog() {}
+    private fun getResourceString(id: Int) = context?.resources?.getString(id)
+    private fun getColor(id: Int) = context?.resources?.getColor(id, null) ?: 0
+    private fun getTimerText() = binding.timerTextView.text.toString()
 
 }

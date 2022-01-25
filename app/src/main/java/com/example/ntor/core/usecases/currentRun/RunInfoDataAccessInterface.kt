@@ -34,6 +34,7 @@ interface RunInfoDataAccessInterface {
     fun getPointsByIdAsFlow(runId: Int): Flow<List<Point>>
     suspend fun deletePointsById(runId: Int)
     suspend fun insertPoint(runId: Int, latitude: Double, longitude: Double)
+    suspend fun insertPoints(runId: Int, points: List<Point>)
 
     //TEMP POINT
     fun getTempPoints(): Flow<List<Point>>

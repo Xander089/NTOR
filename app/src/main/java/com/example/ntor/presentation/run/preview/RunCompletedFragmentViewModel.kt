@@ -1,5 +1,6 @@
 package com.example.ntor.presentation.run.preview
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
@@ -9,6 +10,7 @@ import com.example.ntor.presentation.utils.RunParcelable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,17 +19,12 @@ class RunCompletedFragmentViewModel @Inject constructor(
 ) :
     ViewModel() {
 
+
     var points: LiveData<List<Point>> = MutableLiveData()
 
     fun setupRoute() {
         points = boundary.getTempPoints().asLiveData()
     }
-
-    fun formatDistance(distance: Double) = DataHelper.formatNumber(distance/M_TO_KM)
-    fun formatPacing(pacing: Double) = DataHelper.toMinutes(pacing)
-    fun formatCalories(calories: Double) = DataHelper.formatDouble(calories)
-    fun formatTime(seconds: Int) = DataHelper.toTime(seconds)
-    fun formatDate(date: Long) = DataHelper.formatDate(date)
 
     fun createRun(
         parcel: RunParcelable
@@ -45,10 +42,16 @@ class RunCompletedFragmentViewModel @Inject constructor(
     }
 
     private suspend fun insertPoints(runId: Int) {
-        points.value?.forEach {
-            boundary.insertPoint(runId,it.latitude,it.longitude)
+        points.value?.let {
+            boundary.insertPoints(runId, it)
+            boundary.deleteTempPoints()
         }
     }
 
+    fun formatDistance(distance: Double) = DataHelper.formatNumber(distance / M_TO_KM)
+    fun formatPacing(pacing: Double) = DataHelper.toMinutes(pacing)
+    fun formatCalories(calories: Double) = DataHelper.formatDouble(calories)
+    fun formatTime(seconds: Int) = DataHelper.toTime(seconds)
+    fun formatDate(date: Long) = DataHelper.formatDate(date)
 
 }
