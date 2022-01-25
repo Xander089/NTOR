@@ -40,7 +40,7 @@ object ApplicationModule {
         RunInfoInteractor(dataAccessImpl)
 
     @Provides
-    fun provideCountDownViewModel() = CountDownViewModel()
+    fun provideViewModel() = CountDownViewModel()
 
     @Singleton
     @Provides

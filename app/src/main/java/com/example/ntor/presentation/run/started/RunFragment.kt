@@ -16,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ntor.R
 import com.example.ntor.databinding.FragmentRunBinding
-import com.example.ntor.libraries.mapbox.LocationPermissionHelper
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.utils.NavigationManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +43,6 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
 
     @Inject
     lateinit var mapboxManager : MapboxManager
-    private lateinit var locationPermissionHelper: LocationPermissionHelper
     private lateinit var binding: FragmentRunBinding
     private val viewModel: RunFragmentViewModel by activityViewModels()
 
@@ -68,8 +66,7 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
             viewModel.insertNewPosition(latitude, longitude)
         }
         mapboxManager.setMapView(binding.mapView)
-        locationPermissionHelper = LocationPermissionHelper(WeakReference(requireActivity()))
-        locationPermissionHelper.checkPermissions { mapboxManager.onMapReady(requireContext()) }
+        mapboxManager.onMapReady(requireContext())
     }
 
     private fun initMotionSensor() {
@@ -171,19 +168,7 @@ class RunFragment : Fragment(), StopRunDialog.DialogListener {
         mapboxManager.onCameraTrackingDismissed()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        locationPermissionHelper
-            .onRequestPermissionsResult(
-                requestCode,
-                permissions,
-                grantResults
-            )
-    }
+
 
     override fun onResume() {
         super.onResume()

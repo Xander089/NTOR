@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ntor.presentation.utils.Constants.DEFAULT_DELAY_TIME
 import com.example.ntor.presentation.utils.DataHelper
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -35,7 +33,7 @@ class CountDownViewModel : ViewModel() {
         }
     }
 
-    fun stopTimer() {
+    private fun stopTimer() {
         timerJob?.cancel()
     }
 
