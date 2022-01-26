@@ -7,7 +7,7 @@
     tools:context=".presentation.main.home.HomeFragment">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logoImageView"
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
@@ -38,19 +38,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:fabSize = "mini"
         android:clickable="true"
+        android:contentDescription="description"
         android:src="@drawable/ic_location"
+        android:theme="@style/Theme.Fab"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="description" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +60,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.333" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.666" />
 
             <TextView
                 android:id="@+id/timeLabel"
@@ -77,37 +90,37 @@
                 android:id="@+id/distanceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[km]"
+                android:layout_marginBottom="8dp"
+                android:text="km"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
-                app:layout_constraintBottom_toBottomOf="@+id/caloriesLabel"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/distanceTextView"
-                app:layout_constraintStart_toStartOf="@+id/distanceTextView"
-                app:layout_constraintTop_toTopOf="@+id/caloriesLabel" />
+                app:layout_constraintStart_toStartOf="@+id/distanceTextView" />
 
             <TextView
                 android:id="@+id/caloriesLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Calories"
+                android:text="Cal"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/caloriesTextView"
+                app:layout_constraintStart_toStartOf="@+id/caloriesTextView" />
 
             <TextView
                 android:id="@+id/rithmLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[min/km]"
+                android:layout_marginBottom="8dp"
+                android:text="min/km"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
-                app:layout_constraintBottom_toBottomOf="@+id/distanceLabel"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/rythmTextView"
-                app:layout_constraintStart_toStartOf="@+id/rythmTextView"
-                app:layout_constraintTop_toTopOf="@+id/distanceLabel" />
+                app:layout_constraintStart_toStartOf="@+id/rythmTextView" />
 
             <TextView
                 android:id="@+id/distanceTextView"
@@ -116,22 +129,20 @@
                 android:text="0"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="@+id/caloriesTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/caloriesTextView" />
+                app:layout_constraintBottom_toTopOf="@+id/distanceLabel"
+                app:layout_constraintEnd_toStartOf="@+id/guideline10"
+                app:layout_constraintStart_toStartOf="@+id/guideline9" />
 
             <TextView
                 android:id="@+id/caloriesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="0"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
                 app:layout_constraintBottom_toTopOf="@+id/caloriesLabel"
-                app:layout_constraintEnd_toEndOf="@+id/caloriesLabel"
-                app:layout_constraintStart_toStartOf="@+id/caloriesLabel" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline10" />
 
             <TextView
                 android:id="@+id/timerTextView"
@@ -150,13 +161,12 @@
                 android:id="@+id/rythmTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="00:00"
                 android:textColor="@color/text_timer"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="@+id/distanceTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/distanceTextView" />
+                app:layout_constraintBottom_toTopOf="@+id/rithmLabel"
+                app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

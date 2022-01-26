@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.example.ntor.databinding.FragmentRunCompletedBinding
 import com.example.ntor.libraries.mapbox.MapboxManager
@@ -21,9 +22,15 @@ class RunCompletedFragment : Fragment() {
     private lateinit var binding: FragmentRunCompletedBinding
 
     @Inject
-    lateinit var mapboxManager : MapboxManager
+    lateinit var mapboxManager: MapboxManager
 
     private val viewModel: RunCompletedFragmentViewModel by activityViewModels()
+
+    //when run completed preview is shown --> user can't go back to run started fragment
+    private val onBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {}
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +43,13 @@ class RunCompletedFragment : Fragment() {
         initLayout()
         initObservers()
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(onBackPressedCallback)
     }
 
     override fun onDestroy() {

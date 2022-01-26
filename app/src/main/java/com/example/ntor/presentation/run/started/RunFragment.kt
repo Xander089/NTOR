@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,7 +17,10 @@ import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.utils.Constants.PARCEL_TAG
 import com.example.ntor.presentation.utils.Constants.PAUSE
 import com.example.ntor.presentation.utils.Constants.PLAY
+import com.example.ntor.presentation.utils.Constants.STOP_TAG
 import com.example.ntor.presentation.utils.NavigationManager
+import com.example.ntor.presentation.utils.dialogs.DialogFactory
+import com.example.ntor.presentation.utils.dialogs.DialogFlavour
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,6 +36,12 @@ class RunFragment : Fragment() {
     private lateinit var binding: FragmentRunBinding
     private val viewModel: RunFragmentViewModel by activityViewModels()
 
+    //if run is started --> user can't go back to countdown fragment
+    private val onBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {}
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +56,13 @@ class RunFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(onBackPressedCallback)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mapboxManager.onCameraTrackingDismissed()
@@ -57,7 +74,6 @@ class RunFragment : Fragment() {
 
             //when new position is available -> temporarily cache it
             setMapBoxHandlePosition { latitude, longitude ->
-                Log.v("eaaaa", latitude.toString())
                 viewModel.insertNewPosition(latitude, longitude)
             }
             onMapReady(requireContext()) //shows the map
@@ -72,13 +88,9 @@ class RunFragment : Fragment() {
                 toggleButtonVisibility(stopRunButton)
             }
             stopRunButton.setOnClickListener {
+                showStopRunDialog()
                 viewModel.stopTimer()
                 viewModel.setTimerState(TimerState.OFF)
-                NavigationManager.navigateTo(
-                    findNavController(),
-                    ACTION_RUN_TO_COMPLETED,
-                    bundleOf(PARCEL_TAG to viewModel.buildRunParcelable())
-                )
 
             }
             pauseRunButton.setOnClickListener {
@@ -143,7 +155,23 @@ class RunFragment : Fragment() {
         binding.pauseRunButton.setBackgroundColor(getColor(R.color.orange))
     }
 
-    private fun showStopRunDialog() {}
+    private fun showStopRunDialog() {
+        val dialog = DialogFactory.create(
+            DialogFlavour.STOP_RUN,
+            ok = {
+                NavigationManager.navigateTo(
+                    findNavController(),
+                    ACTION_RUN_TO_COMPLETED,
+                    bundleOf(PARCEL_TAG to viewModel.buildRunParcelable())
+                )
+            },
+            cancel = {
+                restart()
+            }
+        )
+        dialog.show(parentFragmentManager, STOP_TAG)
+    }
+
     private fun getResourceString(id: Int) = context?.resources?.getString(id)
     private fun getColor(id: Int) = context?.resources?.getColor(id, null) ?: 0
     private fun getTimerText() = binding.timerTextView.text.toString()

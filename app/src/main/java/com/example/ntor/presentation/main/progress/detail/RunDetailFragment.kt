@@ -68,7 +68,6 @@ class RunDetailFragment : Fragment() {
         })
 
         viewModel.points.observe(requireActivity(), { points ->
-            Log.v("daaaa",points.toString())
             mapboxManager.onRouteReady(requireContext(), points)
         })
 

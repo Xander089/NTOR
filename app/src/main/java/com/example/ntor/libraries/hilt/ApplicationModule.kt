@@ -46,6 +46,7 @@ object ApplicationModule {
     @Provides
     fun provideCountDownPlayer() = CountDownAudioPlayer()
 
+    @Singleton
     @Provides
     fun provideMapboxManager() = MapboxManager()
 

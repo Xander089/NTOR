@@ -11,6 +11,7 @@ object Constants {
     const val PAUSE = "PAUSE"
     const val PLAY = "START"
     const val PARCEL_TAG = "parcel"
+    const val STOP_TAG = "stop"
 
 
 }

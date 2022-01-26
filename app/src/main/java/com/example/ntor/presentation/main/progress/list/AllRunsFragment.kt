@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -40,12 +41,19 @@ class AllRunsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     private fun initLayout(){
         binding.apply {
+            (activity as AppCompatActivity?)!!.setSupportActionBar(topAppBar)
             runList.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = runAdapter
             }
+            topAppBar.title = getString(R.string.activities)
         }
     }
 

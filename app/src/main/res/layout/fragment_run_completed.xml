@@ -104,9 +104,9 @@
 
             <ImageView
                 android:id="@+id/iconAvgSpeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_speed"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_calories"
                 app:layout_constraintBottom_toTopOf="@+id/iconMaxSpeed"
                 app:layout_constraintEnd_toEndOf="@+id/iconPacing"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -115,9 +115,9 @@
 
             <ImageView
                 android:id="@+id/iconMaxSpeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_speed"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_distance"
                 app:layout_constraintBottom_toTopOf="@+id/iconTIme"
                 app:layout_constraintEnd_toEndOf="@+id/iconPacing"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -189,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Pacing"
+                android:text="Pace"
                 android:textAllCaps="false"
                 android:textColor="@color/list_secondary_text"
                 android:textSize="16sp"
