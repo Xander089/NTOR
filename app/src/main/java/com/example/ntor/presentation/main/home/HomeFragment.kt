@@ -7,11 +7,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import com.example.ntor.R
 import com.example.ntor.databinding.FragmentHomeBinding
 import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.run.RunActivity
+import com.example.ntor.presentation.run.started.RunFragment
+import com.example.ntor.presentation.utils.Constants
+import com.example.ntor.presentation.utils.NavigationManager
+import com.example.ntor.presentation.utils.dialogs.DialogFactory
+import com.example.ntor.presentation.utils.dialogs.DialogFlavour
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +31,14 @@ class HomeFragment : Fragment() {
 
     @Inject
     lateinit var mapboxManager: MapboxManager
+
+    //if run is started --> show exit dialog
+    private val onBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showDialog()
+            }
+        }
 
     private val requestMultiplePermissionLauncher =
         registerForActivityResult(
@@ -44,6 +61,18 @@ class HomeFragment : Fragment() {
         initLayout()
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(onBackPressedCallback)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapboxManager.onCameraTrackingDismissed()
     }
 
     private fun onMapReady() {
@@ -89,7 +118,7 @@ class HomeFragment : Fragment() {
             }
             locationButton.setOnClickListener {
                 val permissionsNotGranted = !areLocationPermissionsGranted()
-                if(permissionsNotGranted){
+                if (permissionsNotGranted) {
                     checkPermissions(false) {
                         mapboxManager.onMapReady(requireContext())
                     }
@@ -98,9 +127,15 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapboxManager.onCameraTrackingDismissed()
+    private fun showDialog() {
+        val dialog = DialogFactory.create(
+            DialogFlavour.BASE_ALERT_DIALOG,
+            ok = {
+                requireActivity().finish()
+            },
+            title = getString(R.string.exit),
+            message = getString(R.string.exit_the_app),
+        )
+        dialog.show(parentFragmentManager, Constants.STOP_TAG)
     }
 }

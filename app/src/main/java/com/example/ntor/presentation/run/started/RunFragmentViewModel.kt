@@ -5,6 +5,7 @@ import com.example.ntor.core.entities.Point
 import com.example.ntor.core.usecases.currentRun.RunInfoIOBoundary
 import com.example.ntor.presentation.utils.Constants.FOUR_SECONDS
 import com.example.ntor.presentation.utils.Constants.MAX_TIME
+import com.example.ntor.presentation.utils.Constants.PACING_THRESHOLD
 import com.example.ntor.presentation.utils.Constants.RESET_TIME
 import com.example.ntor.presentation.utils.DataHelper
 import com.example.ntor.presentation.utils.RunParcelable
@@ -24,16 +25,10 @@ class RunFragmentViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-
-    fun formatDouble(number: Double) = DataHelper.formatDouble(number)
-    fun toMinutes(minutes: Double, previous: String): String {
-        return when {
-            minutes > 50 -> previous
-            else -> DataHelper.toMinutes(minutes)
-        }
+    init {
+        startTimer(RESET_TIME)
+        clearTempPoints()
     }
-
-    fun toTime(seconds: Int) = DataHelper.toTime(seconds)
 
     private var countDownTimer: Flow<Int> = DataHelper.provideCountDownTimer(0, MAX_TIME)
     private lateinit var timerJob: Job
@@ -54,10 +49,14 @@ class RunFragmentViewModel @Inject constructor(
 
     private var lastInsertion: Long = Date().time
 
-    private var userMotionState = UserMotion.STILL
-    fun setUserMotionState(state: UserMotion) {
-        userMotionState = state
+    private var timerState = TimerState.ON
+    fun setTimerState(state: TimerState) {
+        timerState = state
     }
+    fun getTimerState() = timerState
+    private fun isTimerStateOn() = timerState == TimerState.ON
+
+    fun getPointsCount() = points.value?.count() ?: 0
 
     fun buildRunParcelable(): RunParcelable {
         val distance: Double = _distance.value ?: 0.0
@@ -69,15 +68,6 @@ class RunFragmentViewModel @Inject constructor(
         return RunParcelable(distance, time, date, pacing, calories)
     }
 
-
-    private var timerState = TimerState.ON
-    fun setTimerState(state: TimerState) {
-        timerState = state
-    }
-
-    fun getTimerState() = timerState
-
-    private fun isTimerStateOn() = timerState == TimerState.ON
 
     fun updatePacing(time: String, distance: Double) {
         val seconds = DataHelper.toSeconds(time)
@@ -103,11 +93,6 @@ class RunFragmentViewModel @Inject constructor(
     private fun clearTempPoints() =
         viewModelScope.launch(Dispatchers.IO) { boundary.deleteTempPoints() }
 
-    init {
-        startTimer(RESET_TIME)
-        clearTempPoints()
-    }
-
 
     fun startTimer(time: String) {
         countDownTimer = DataHelper.provideCountDownTimer(DataHelper.toSeconds(time), MAX_TIME)
@@ -129,7 +114,6 @@ class RunFragmentViewModel @Inject constructor(
 
 
     fun insertNewPosition(latitude: Double, longitude: Double) {
-
         val time = Date().time
         if (time - lastInsertion > FOUR_SECONDS) {
             lastInsertion = time
@@ -137,10 +121,17 @@ class RunFragmentViewModel @Inject constructor(
                 if (isTimerStateOn()) {
                     boundary.insertCurrentPoint(latitude, longitude)
                 }
-                //setUserMotionState(UserMotion.STILL)
             }
         }
 
+    }
+
+    fun formatDouble(number: Double) = DataHelper.formatDouble(number)
+    fun toMinutes(minutes: Double, previous: String): String {
+        return when {
+            minutes > PACING_THRESHOLD -> previous
+            else -> DataHelper.toMinutes(minutes)
+        }
     }
 
 }

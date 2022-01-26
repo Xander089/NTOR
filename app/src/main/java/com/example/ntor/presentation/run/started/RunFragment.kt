@@ -17,6 +17,7 @@ import com.example.ntor.libraries.mapbox.MapboxManager
 import com.example.ntor.presentation.utils.Constants.PARCEL_TAG
 import com.example.ntor.presentation.utils.Constants.PAUSE
 import com.example.ntor.presentation.utils.Constants.PLAY
+import com.example.ntor.presentation.utils.Constants.STANDARD_POINTS
 import com.example.ntor.presentation.utils.Constants.STOP_TAG
 import com.example.ntor.presentation.utils.NavigationManager
 import com.example.ntor.presentation.utils.dialogs.DialogFactory
@@ -156,23 +157,39 @@ class RunFragment : Fragment() {
     }
 
     private fun showStopRunDialog() {
-        val dialog = DialogFactory.create(
-            DialogFlavour.STOP_RUN,
-            ok = {
-                NavigationManager.navigateTo(
-                    findNavController(),
-                    ACTION_RUN_TO_COMPLETED,
-                    bundleOf(PARCEL_TAG to viewModel.buildRunParcelable())
-                )
-            },
-            cancel = {
-                restart()
-            }
-        )
-        dialog.show(parentFragmentManager, STOP_TAG)
+        val routeSize = viewModel.getPointsCount()
+        DialogFactory.create(
+            DialogFlavour.BASE_ALERT_DIALOG,
+            title = getString(R.string.stop),
+            message = getDialogMessage(routeSize),
+            ok = { toggleDialogAction(routeSize) },
+            cancel = { restart() }
+        ).show(parentFragmentManager, STOP_TAG)
     }
 
-    private fun getResourceString(id: Int) = context?.resources?.getString(id)
+    private fun navigateToPreviewFragment() {
+        NavigationManager.navigateTo(
+            findNavController(),
+            ACTION_RUN_TO_COMPLETED,
+            bundleOf(PARCEL_TAG to viewModel.buildRunParcelable())
+        )
+    }
+
+    private fun toggleDialogAction(routeSize: Int) = when {
+        routeSize < STANDARD_POINTS -> {
+            requireActivity().finish()
+        }
+        else -> {
+            navigateToPreviewFragment()
+        }
+    }
+
+    private fun getDialogMessage(routeSize: Int) = when {
+        routeSize < STANDARD_POINTS -> getString(R.string.too_few_points_run)
+        else -> ""
+    }
+
+
     private fun getColor(id: Int) = context?.resources?.getColor(id, null) ?: 0
     private fun getTimerText() = binding.timerTextView.text.toString()
 

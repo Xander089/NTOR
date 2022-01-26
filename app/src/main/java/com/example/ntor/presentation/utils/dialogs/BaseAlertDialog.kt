@@ -8,19 +8,27 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.example.ntor.R
+import com.example.ntor.databinding.DialogBinding
 
-class StopRunDialogFragment(
+class BaseAlertDialog(
     val ok: () -> Unit,
-    val cancel: () -> Unit = {}
+    val cancel: () -> Unit = {},
+    private val title: String = "",
+    private val message: String = "",
 ) : DialogFragment() {
 
+    private lateinit var binding: DialogBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        return inflater.inflate(R.layout.dialog_stop_run, container, false)
+        binding = DialogBinding.inflate(inflater, container, false)
+        binding.apply {
+            stopWorkoutLabel.text = title
+            messageLabel.text = message
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

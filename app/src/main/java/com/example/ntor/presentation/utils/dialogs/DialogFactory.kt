@@ -6,11 +6,18 @@ object DialogFactory {
     fun create(
         flavour: DialogFlavour,
         ok: () -> Unit = {},
-        cancel: () -> Unit = {}
+        cancel: () -> Unit = {},
+        title: String = "",
+        message: String = "",
     ): DialogFragment {
+
         return when (flavour) {
-            DialogFlavour.STOP_RUN -> StopRunDialogFragment(ok, cancel)
-            else -> StopRunDialogFragment(ok, cancel)
+            DialogFlavour.BASE_ALERT_DIALOG -> BaseAlertDialog(
+                ok,
+                cancel,
+                title,
+                message
+            )
         }
     }
 
