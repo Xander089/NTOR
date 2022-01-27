@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_run.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/dialog.xml" value="0.19914529914529913" />
         <entry key="app/src/main/res/layout/dialog_stop_run.xml" value="0.36615849258174765" />
         <entry key="app/src/main/res/layout/fragment_all_runs.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_count_down.xml" value="0.33" />
