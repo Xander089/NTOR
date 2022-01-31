@@ -1,6 +1,11 @@
 package com.example.ntor.presentation.utils
 
 import com.example.ntor.core.entities.Point
+import com.example.ntor.presentation.utils.Constants.AVG_CONSUMPTION_PER_KM
+import com.example.ntor.presentation.utils.Constants.EARTH_RADIUS_M
+import com.example.ntor.presentation.utils.Constants.RESET_TIME
+import com.example.ntor.presentation.utils.Constants.TO_KM
+import com.example.ntor.presentation.utils.Constants.ZERO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import java.util.*
@@ -9,18 +14,9 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+
 object DataHelper {
 
-
-    private const val EARTH_RADIUS_M = 6371000
-    private const val RESET_TIME = "00:00:00"
-    private const val ZERO = "0"
-    private const val LB_KG = 0.4536
-    private const val TO_KM = 1000.0
-    private const val FACTOR = 0.75
-    private const val MILES_KM = 1.608
-    private const val AVG_WEIGHT_KG = 70.0
-    private const val AVG_CONSUMPTION_PER_KM = AVG_WEIGHT_KG / LB_KG * FACTOR / MILES_KM
 
     private val monthMap = mapOf<String, String>(
         "Jan" to "01",

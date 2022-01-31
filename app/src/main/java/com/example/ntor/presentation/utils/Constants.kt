@@ -15,5 +15,14 @@ object Constants {
     const val PARCEL_TAG = "parcel"
     const val STOP_TAG = "stop"
 
+    const val EARTH_RADIUS_M = 6371000
+    const val ZERO = "0"
+    private const val LB_KG = 0.4536
+    const val TO_KM = 1000.0
+    const val FACTOR = 0.75
+    private const val MILES_KM = 1.608
+    private const val AVG_WEIGHT_KG = 70.0
+    const val AVG_CONSUMPTION_PER_KM = AVG_WEIGHT_KG / LB_KG * FACTOR / MILES_KM
+
 
 }

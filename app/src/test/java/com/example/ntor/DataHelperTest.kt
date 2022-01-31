@@ -1,44 +1,109 @@
 package com.example.ntor
 
+import com.example.ntor.core.entities.Point
+import com.example.ntor.presentation.utils.Constants
+import com.example.ntor.presentation.utils.DataHelper
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import java.util.*
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
+
 class DataHelperTest {
 
-//    private val dataHelper = DataHelper()
+    @Test
+    fun `when input distance is 1 point 12345 then the returned string is 1 point 1 km`() {
+        //given
+        val inputDistance = 1.12345
+        //when
+        val actual = DataHelper.formatNumber(inputDistance)
+        //then
+        assertEquals("1.1 km", actual)
+    }
+
+    @Test
+    fun `when input is one second then the timer elapsed time is one second`() = runBlocking{
+        //given
+        val actual = DataHelper.provideCountDownTimer(0,1).last()
+        //then
+        assertEquals(1, actual)
+    }
+
+    @Test
+    fun `when input distance is 1 point 12345 then the returned string is 1 point 1`() {
+        //given
+        val inputDistance = 1.12345
+        //when
+        val actual = DataHelper.formatDouble(inputDistance)
+        //then
+        assertEquals("1.1", actual)
+    }
+
+
+//    fun calculateCalories(distance: Double): Double =
+//        distance / DataHelper.TO_KM * DataHelper.AVG_CONSUMPTION_PER_KM
 //
-//    @Test
-//    fun `when number is "1 point 12345" then format number returns 1 point 1`() {
-//        val formatted = dataHelper.formatDouble(1.12345)
-//        Assert.assertEquals("1.1", formatted)
+//    fun calculateMinutesPerKm(seconds: Int, distance: Double): Double {
+//        val minutes = seconds.toDouble() / 60.0
+//        val km = distance / DataHelper.TO_KM
+//        return minutes / km
 //    }
 //
-//    @Test
-//    fun `when distance is 1000 m then burned calories are 71`() {
-//        val calories = dataHelper.calculateCalories(1000.0).toInt()
-//        Assert.assertEquals(71, calories)
+//    fun toTime(seconds: Int): String {
+//
+//        if (seconds <= 0) {
+//            return DataHelper.RESET_TIME
+//        }
+//
+//        val hour = seconds / 3600
+//        var remainderSeconds = seconds % 3600
+//        val minutes = remainderSeconds / 60
+//        remainderSeconds %= 60
+//
+//        val h = if (hour < 10) "${DataHelper.ZERO}$hour" else "$hour"
+//        val m = if (minutes < 10) "${DataHelper.ZERO}$minutes" else "$minutes"
+//        val s = if (remainderSeconds < 10) "${DataHelper.ZERO}$remainderSeconds" else "$remainderSeconds"
+//
+//        return "$h:$m:$s"
 //    }
 //
-//    @Test
-//    fun `when distance is 1000 m and seconds are 600 then minutes per km are 10`() {
-//        val minPerKm = dataHelper.calculateMinutesPerKm(600, 1000.0)
-//        Assert.assertEquals(10.0, minPerKm, 0.0)
+//    fun toSeconds(time: String): Int {
+//
+//        val splitTime = time.split(":")
+//
+//        if (splitTime.size < 3) {
+//            return 0
+//        }
+//
+//        val hours = splitTime[0].toInt() * 3600
+//        val minutes = splitTime[1].toInt() * 60
+//        val seconds = splitTime[2].toInt()
+//
+//        return hours + minutes + seconds
 //    }
 //
-//    @Test
-//    fun `when seconds are 120 then time is 00 02 00`() {
-//        val time = dataHelper.toTime(120)
-//        Assert.assertEquals("00:02:00", time)
+//    fun toMinutes(value: Double): String {
+//
+//        val minutes = value.toInt()
+//        val mantissa = value - minutes
+//        val remainingSeconds = (mantissa * 60).toInt()
+//
+//        return "$minutes:$remainingSeconds"
 //    }
 //
-//    @Test
-//    fun `when time is 00 02 00 then seconds are 120`() {
-//        val seconds = dataHelper.toSeconds("00:02:00")
-//        Assert.assertEquals(120, seconds)
+//    fun toHours(seconds: Int): String {
+//        val hours = seconds / 3600.0
+//        return formatDouble(hours)
 //    }
 //
-//    @Test
-//    fun `when minutes are 2 point 5 then the formatted string is 2 colon 30`() {
-//        val minutes = dataHelper.toMinutes(2.5)
-//        Assert.assertEquals("2:30", minutes)
-//    }
+//    fun metresToKm(distance: Double) = distance / 1000.0
 
 
 }

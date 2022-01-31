@@ -47,9 +47,9 @@ kapt {
 
 dependencies {
 
-    //EXOPLAYER
-    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //MOCKITO
+    testImplementation "org.mockito:mockito-core:4.3.1"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
 
     //CAMERAX
     def camerax_version = "1.0.1"
@@ -89,6 +89,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.4.0")
 
     //CORE
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
